@@ -16,13 +16,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   widthPixelation:
     m_OverrideState: 1
-    m_Value: 256
+    m_Value: 200
   heightPixelation:
     m_OverrideState: 1
-    m_Value: 256
+    m_Value: 200
   colorPrecision:
     m_OverrideState: 1
-    m_Value: 32
+    m_Value: 8
 --- !u!114 &-2282319228296131218
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -38,17 +38,17 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   patternIndex:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 2
   ditherThreshold:
-    m_OverrideState: 0
-    m_Value: 512
+    m_OverrideState: 1
+    m_Value: 4
   ditherStrength:
-    m_OverrideState: 0
-    m_Value: -0.05
+    m_OverrideState: 1
+    m_Value: -2.75
   ditherScale:
-    m_OverrideState: 0
-    m_Value: 4.66
+    m_OverrideState: 1
+    m_Value: 4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,48 +64,3 @@ MonoBehaviour:
   components:
   - {fileID: -2282319228296131218}
   - {fileID: -7687718166558974083}
-  - {fileID: 1844069282798770191}
---- !u!114 &1844069282798770191
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
-  m_Name: Fog
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  fogDensity:
-    m_OverrideState: 0
-    m_Value: 1
-  fogDistance:
-    m_OverrideState: 0
-    m_Value: 10
-  fogColor:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  fogNear:
-    m_OverrideState: 0
-    m_Value: 1
-  fogFar:
-    m_OverrideState: 0
-    m_Value: 100
-  fogAltScale:
-    m_OverrideState: 0
-    m_Value: 10
-  fogThinning:
-    m_OverrideState: 0
-    m_Value: 100
-  noiseScale:
-    m_OverrideState: 0
-    m_Value: 100
-  noiseStrength:
-    m_OverrideState: 0
-    m_Value: 0.05
