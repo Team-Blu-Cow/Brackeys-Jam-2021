@@ -32,7 +32,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Contains the command the user wishes upon the character
-struct Cmd
+internal struct Cmd
 {
     public float forwardMove;
     public float rightMove;
@@ -63,9 +63,6 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 8.0f;                // The speed at which the character's up axis gains when hitting jump
     public bool holdJumpToBhop = false;           // When enabled allows player to just hold jump button to keep on bhopping perfectly. Beware: smells like casual.
 
-    /*print() style */
-    public GUIStyle style;
-
     /*FPS Stuff */
     public float fpsDisplayRate = 4.0f; // 4 updates per sec
 
@@ -77,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
     // Camera rotations
     private float rotX = 0.0f;
+
     private float rotY = 0.0f;
 
     private Vector3 moveDirectionNorm = Vector3.zero;
@@ -96,27 +94,37 @@ public class PlayerController : MonoBehaviour
     [SerializeField, HideInInspector] private PlayerControls _input;
 
     [SerializeField] private PlayerInputs _controls;
+    [SerializeField] private BaseShooting _shooting;
+
+    [SerializeField] private DebugLabels m_debuglabels;
 
     private void OnValidate()
     {
         _input = new PlayerControls();
         _controller = GetComponent<CharacterController>();
+
+        if (m_debuglabels == null)
+            m_debuglabels = FindObjectOfType<DebugLabels>();
     }
 
     public void SetInputs()
     {
         _controls = new PlayerInputs(this);
 
-        _input.Player.Movement.performed    += ctx => _controls._moveVec = ctx.ReadValue<Vector2>();
-        _input.Player.Aim.performed         += ctx => _controls._aimVec = ctx.ReadValue<Vector2>();
+        _input.Player.Movement.performed += ctx => _controls._moveVec = ctx.ReadValue<Vector2>();
+        _input.Player.Aim.performed += ctx => _controls._aimVec = ctx.ReadValue<Vector2>();
 
-        _input.Player.Jump.performed        += ctx => _controls._jumpButton.Performed();
-        _input.Player.Jump.started          += ctx => _controls._jumpButton.Started();
-        _input.Player.Jump.canceled         += ctx => _controls._jumpButton.Canceled();
+        _input.Player.Jump.performed += ctx => _controls._jumpButton.Performed();
+        _input.Player.Jump.started += ctx => _controls._jumpButton.Started();
+        _input.Player.Jump.canceled += ctx => _controls._jumpButton.Canceled();
 
-        _input.Player.Fire.performed        += ctx => _controls._fireButton.Performed();
-        _input.Player.Fire.started          += ctx => _controls._fireButton.Started();
-        _input.Player.Fire.canceled         += ctx => _controls._fireButton.Canceled();
+        _input.Player.Fire.performed += ctx => _controls._fireButton.Performed();
+        _input.Player.Fire.started += ctx => _controls._fireButton.Started();
+        _input.Player.Fire.canceled += ctx => _controls._fireButton.Canceled();
+        
+        _input.Player.Reload.performed += ctx => _controls._reloadButton.Performed();
+        _input.Player.Reload.started += ctx => _controls._reloadButton.Started();
+        _input.Player.Reload.canceled += ctx => _controls._reloadButton.Canceled();
     }
 
     private void Start()
@@ -159,6 +167,14 @@ public class PlayerController : MonoBehaviour
             if (_controls._fireButton._performed)
                 Cursor.lockState = CursorLockMode.Locked;
         }
+        else
+        {
+            if (_controls._fireButton._performed) //#TODO #jack change this to be when not paused
+                _shooting.Shoot();
+        }
+
+        if (_controls._reloadButton._started)
+            _shooting.Reload();
 
         /* Camera rotation stuff, mouse controls this shit */
         rotX -= _controls._aimVec.y * xMouseSensitivity * 0.02f;
@@ -172,8 +188,6 @@ public class PlayerController : MonoBehaviour
 
         this.transform.rotation = Quaternion.Euler(0, rotY, 0); // Rotates the collider
         playerView.rotation = Quaternion.Euler(rotX, rotY, 0); // Rotates the camera
-
-
 
         /* Movement, here's the important part */
         QueueJump();
@@ -199,19 +213,32 @@ public class PlayerController : MonoBehaviour
             transform.position.z);
 
         _controls.ResetInputs();
+
+        if (m_debuglabels != null)
+        {
+            var ups = _controller.velocity;
+            ups.y = 0;
+            m_debuglabels.Add(new List<string>
+            {
+                "FPS: " + fps,
+                "Speed: " + Mathf.Round(ups.magnitude * 100) / 100 + "ups",
+                "Top Speed: " + Mathf.Round(playerTopVelocity * 100) / 100 + "ups"
+            });
+        }
     }
 
-    private void OnEnable() =>  _input.Enable();
+    private void OnEnable() => _input.Enable();
 
     private void OnDisable() => _input.Disable();
 
-   /*******************************************************************************************************\
-   |* MOVEMENT
-   \*******************************************************************************************************/
+    /*******************************************************************************************************\
+    |* MOVEMENT
+    \*******************************************************************************************************/
 
     /**
      * Sets the movement direction based on player input
      */
+
     private void SetMovementDir()
     {
         _cmd.forwardMove = _controls._moveVec.y;
@@ -221,6 +248,7 @@ public class PlayerController : MonoBehaviour
     /**
      * Queues the next jump just like in Q3
      */
+
     private void QueueJump()
     {
         if (holdJumpToBhop)
@@ -238,6 +266,7 @@ public class PlayerController : MonoBehaviour
     /**
      * Execs when the player is in the air
     */
+
     private void AirMove()
     {
         Vector3 wishdir;
@@ -283,6 +312,7 @@ public class PlayerController : MonoBehaviour
      * players to move side to side much faster rather than being
      * 'sluggish' when it comes to cornering.
      */
+
     private void AirControl(Vector3 wishdir, float wishspeed)
     {
         float zspeed;
@@ -322,6 +352,7 @@ public class PlayerController : MonoBehaviour
     /**
      * Called every frame when the engine detects that the player is on the ground
      */
+
     private void GroundMove()
     {
         Vector3 wishdir;
@@ -357,6 +388,7 @@ public class PlayerController : MonoBehaviour
     /**
      * Applies friction to the player, called in both the air and on the ground
      */
+
     private void ApplyFriction(float t)
     {
         Vector3 vec = playerVelocity; // Equivalent to: VectorCopy();
@@ -404,25 +436,16 @@ public class PlayerController : MonoBehaviour
         playerVelocity.x += accelspeed * wishdir.x;
         playerVelocity.z += accelspeed * wishdir.z;
     }
-
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(0, 0, 400, 100), "FPS: " + fps, style);
-        var ups = _controller.velocity;
-        ups.y = 0;
-        GUI.Label(new Rect(0, 15, 400, 100), "Speed: " + Mathf.Round(ups.magnitude * 100) / 100 + "ups", style);
-        GUI.Label(new Rect(0, 30, 400, 100), "Top Speed: " + Mathf.Round(playerTopVelocity * 100) / 100 + "ups", style);
-    }
 }
-
 
 [System.Serializable]
 public class PlayerInputs
 {
-    MonoBehaviour _gameObject;
+    private MonoBehaviour _gameObject;
 
     public ButtonInput _jumpButton;
     public ButtonInput _fireButton;
+    public ButtonInput _reloadButton;
 
     public Vector2 _moveVec;
     public Vector2 _aimVec;
@@ -433,15 +456,15 @@ public class PlayerInputs
 
         _jumpButton._gameObject = gameObject;
         _fireButton._gameObject = gameObject;
-
+        _reloadButton._gameObject = gameObject;
     }
 
     public void ResetInputs()
     {
         _jumpButton.ResetButton();
         _fireButton.ResetButton();
+        _reloadButton.ResetButton();
     }
-
 }
 
 [System.Serializable]
@@ -479,4 +502,3 @@ public struct ButtonInput
         _started = false;
     }
 }
-
