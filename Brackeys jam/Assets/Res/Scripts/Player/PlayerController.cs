@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
     private void OnValidate()
     {
         _input = new PlayerControls();
+
         _controller = GetComponent<CharacterController>();
     }
 
@@ -117,6 +118,11 @@ public class PlayerController : MonoBehaviour
         _input.Player.Fire.performed        += ctx => _controls._fireButton.Performed();
         _input.Player.Fire.started          += ctx => _controls._fireButton.Started();
         _input.Player.Fire.canceled         += ctx => _controls._fireButton.Canceled();
+    }
+
+    private void Awake()
+    {
+        _input = new PlayerControls();
     }
 
     private void Start()

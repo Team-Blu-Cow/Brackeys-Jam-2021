@@ -669,7 +669,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24972
+  m_Name: pb_Mesh21494
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 1274428488}
   - component: {fileID: 1274428486}
   - component: {fileID: 1274428487}
+  - component: {fileID: 1274428489}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -989,6 +990,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1274428489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274428485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185dd67706f75374d8f3644a22d9e5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgrades:
+  - {fileID: 11400000, guid: f241eb5d551d2ed4f83ecfd2a9f1b6ca, type: 2}
+  - {fileID: 11400000, guid: d816abfaf01fbc24b8ad47447627b1e6, type: 2}
+  upgradeData:
+    data: []
 --- !u!33 &1274428490
 MeshFilter:
   m_ObjectHideFlags: 0
