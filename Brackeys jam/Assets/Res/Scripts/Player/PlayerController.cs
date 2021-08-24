@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private BaseShooting[] _shooting;
+
     private int _shootingIndex;
     private float _swapCooldown = 0.5f;
 
@@ -151,6 +152,11 @@ public class PlayerController : MonoBehaviour
             transform.position.x,
             transform.position.y + playerViewYOffset,
             transform.position.z);
+
+        foreach (BaseShooting shooting in _shooting)
+            shooting.enabled = false;
+
+        _shooting[_shootingIndex].enabled = true;
 
         SetInputs();
     }
@@ -220,7 +226,7 @@ public class PlayerController : MonoBehaviour
 
         _controls.ResetInputs();
 
-        if (_swapCooldown < 0.5)        
+        if (_swapCooldown < 0.5)
             _swapCooldown += Time.deltaTime;
     }
 

@@ -9,7 +9,6 @@ public class ProjectileShooting : BaseShooting
     private GameObject m_bullet;
 
     public float m_bulletSpeed;
-    public int m_bounces;
 
     public override bool Shoot()
     {

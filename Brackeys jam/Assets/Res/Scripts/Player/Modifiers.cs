@@ -13,16 +13,15 @@ public class Modifiers : MonoBehaviour
     public float m_spread;
     public float m_range;
     public float m_explosiveRadius;
+    public int m_bounces;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 }

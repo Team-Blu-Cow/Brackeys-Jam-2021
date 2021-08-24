@@ -18,15 +18,36 @@ abstract public class BaseShooting : MonoBehaviour
     private float m_fireCooldown;
 
     private float m_reloadCooldown;
-    
-    public GUIStyle style;
 
     private DebugLabels m_debuglabels;
 
-    public bool m_debug;
+    private bool m_debug;
+
+    public bool DebugBool
+    {
+        get { return m_debug; }
+        set
+        {
+            if (value == m_debug)
+                return;
+
+            m_debug = value;
+            foreach (GameObject gameObject in m_debugBullets)
+            {
+                gameObject.SetActive(m_debug);
+            }
+        }
+    }
 
     public int m_maxDebugBullets;
     private Queue<GameObject> m_debugBullets = new Queue<GameObject>();
+
+    [SerializeField, HideInInspector] private PlayerControls _input;
+
+    private void OnValidate()
+    {
+        _input = new PlayerControls();
+    }
 
     // Start is called before the first frame update
     public void Start()
@@ -34,8 +55,14 @@ abstract public class BaseShooting : MonoBehaviour
         m_reloadCooldown = m_modifiers.m_reloadSpeed;
         m_fireCooldown = m_modifiers.m_fireRate;
 
-        m_debuglabels = FindObjectOfType<DebugLabels>();                
+        m_debuglabels = FindObjectOfType<DebugLabels>();
+
+        _input.Player.Reload.performed += ctx => { DebugBool = !DebugBool; };
     }
+
+    private void OnEnable() => _input.Enable();
+
+    private void OnDisable() => _input.Disable();
 
     // Update is called once per frame
     public void Update()
@@ -51,7 +78,7 @@ abstract public class BaseShooting : MonoBehaviour
     private void LateUpdate()
     {
         // Add labels to debug
-        if (m_debuglabels != null)
+        if (m_debuglabels != null && m_modifiers != null)
         {
             m_debuglabels.Add(new List<string>
             {
@@ -79,6 +106,37 @@ abstract public class BaseShooting : MonoBehaviour
         return true;
     }
 
+    protected void SpawnDebug(Vector3 point, bool hit)
+    {
+        // Spawn a new object to draw the given bullets trail
+        GameObject tempBullet = new GameObject("Debug-Bullet");
+        m_debugBullets.Enqueue(tempBullet);
+
+        DebugBullet debugBullet = tempBullet.AddComponent<DebugBullet>();
+
+        debugBullet.m_range = m_modifiers.m_range;
+        debugBullet.m_shooting = this;
+        debugBullet.m_hitType = m_hitType;
+        debugBullet.m_hitPos = new List<Vector3> { point };
+        debugBullet.m_hit = hit;
+
+        tempBullet.transform.position = Camera.main.transform.position;
+        if (this is HitscanShooting)
+        {
+            HitscanShooting hitscan = (HitscanShooting)this;
+            debugBullet.m_hitPos = hitscan.points;
+        }
+
+        debugBullet.Setup();
+
+        // Clear more than max amount of bullets
+        if (m_debugBullets.Count > m_maxDebugBullets)
+            Destroy(m_debugBullets.Dequeue());
+
+        if (!m_debug)
+            tempBullet.SetActive(false);
+    }
+
     public virtual void OnHit(RaycastHit hit)
     {
         OnHit(hit.transform, hit.point);
@@ -87,34 +145,6 @@ abstract public class BaseShooting : MonoBehaviour
     public virtual void OnHit(Collision hit)
     {
         OnHit(hit.transform, hit.GetContact(0).point);
-    }
-
-    protected void SpawnDebug(Vector3 point)
-    {
-        if (m_debug)
-        {
-            // Spawn a new object to draw the given bullets trail
-            GameObject tempBullet = new GameObject("Debug-Bullet");
-            m_debugBullets.Enqueue(tempBullet);
-
-            DebugBullet debugBullet = tempBullet.AddComponent<DebugBullet>();
-
-            debugBullet.m_range = m_modifiers.m_range;
-            debugBullet.m_shooting = this;
-            debugBullet.m_hitType = m_hitType;
-            debugBullet.m_hitPos = point;
-
-            tempBullet.transform.position = Camera.main.transform.position;
-            if (this is HitscanShooting)
-            {
-                HitscanShooting hitscan = (HitscanShooting)this;
-                tempBullet.transform.forward = Camera.main.transform.forward + hitscan.spread;
-            }
-
-            // Clear more than max amount of bullets
-            if (m_debugBullets.Count > m_maxDebugBullets)
-                Destroy(m_debugBullets.Dequeue());
-        }
     }
 
     public virtual bool OnHit(Transform hit, Vector3 point)
@@ -142,7 +172,6 @@ abstract public class BaseShooting : MonoBehaviour
                         damaged = true;
                     }
 
-
                 //Deal damage in an area of hit
                 break;
 
@@ -150,7 +179,7 @@ abstract public class BaseShooting : MonoBehaviour
                 break;
         }
 
-        SpawnDebug(point);
+        SpawnDebug(point, damaged);
         return damaged;
     }
 

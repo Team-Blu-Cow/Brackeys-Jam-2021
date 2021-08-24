@@ -10,7 +10,7 @@ public class DestroyProjectile : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        StartCoroutine(WaitDestroy(m_shooing.m_modifiers.m_range/10));
+        StartCoroutine(WaitDestroy(m_shooing.m_modifiers.m_range / 10));
     }
 
     private IEnumerator WaitDestroy(float time)
@@ -26,7 +26,7 @@ public class DestroyProjectile : MonoBehaviour
 
         m_shooing.OnHit(collision);
 
-        if (m_bounceAmount < m_shooing.m_bounces)
+        if (m_bounceAmount < m_shooing.m_modifiers.m_bounces)
         {
             m_bounceAmount++;
             return;
