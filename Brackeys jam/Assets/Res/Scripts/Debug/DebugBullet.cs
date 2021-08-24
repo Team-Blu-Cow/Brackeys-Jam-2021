@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class DebugBullet : MonoBehaviour
 {
+    public BaseShooting.HitType m_hitType;
+    public BaseShooting m_shooting;
     private bool m_hit = false;
-    private Vector3 m_hitPos;
+    public Vector3 m_hitPos;
     public float m_range;
 
     // Start is called before the first frame update
@@ -15,7 +17,7 @@ public class DebugBullet : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_range))
         {
             m_hit = true;
-            m_hitPos = hit.point;
+            //m_hitPos = hit.point;
         }
     }
 
@@ -23,19 +25,26 @@ public class DebugBullet : MonoBehaviour
     {
         // Set to max range
         float dist = m_range;
+        float sphereSize = 0.2f;
         Gizmos.color = new Color(0, 0, 1, 0.5f);
 
+        if (m_hitType == BaseShooting.HitType.Explosive)
+            sphereSize = m_shooting.m_explosiveRadius;
+
         // get the shorter distance and draw a sphere
-        if (m_hit)
+        if (m_hit || m_shooting is ProjectileShooting)
         {
             dist = Vector3.Distance(transform.position, m_hitPos);
-            Gizmos.DrawSphere(m_hitPos, 0.2f);
+            Gizmos.DrawSphere(m_hitPos, sphereSize);
         }
 
         Gizmos.color = Color.red;
 
-        // Draw line from start in shot direction
-        Vector3 direction = transform.TransformDirection(Vector3.forward) * dist;
-        Gizmos.DrawRay(transform.position, direction);
+        if (m_shooting is HitscanShooting)
+        {
+            // Draw line from start in shot direction
+            Vector3 direction = transform.TransformDirection(Vector3.forward) * dist;
+            Gizmos.DrawRay(transform.position, direction);
+        }
     }
 }

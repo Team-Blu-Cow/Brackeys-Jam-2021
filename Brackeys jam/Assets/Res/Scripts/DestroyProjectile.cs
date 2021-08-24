@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destroy : MonoBehaviour
+public class DestroyProjectile : MonoBehaviour
 {
-    public float m_time;
-    [HideInInspector] public int m_bounces;
+    [HideInInspector] public ProjectileShooting m_shooing;
     private int m_bounceAmount;
 
     // Start is called before the first frame update
     private void Start()
     {
-        StartCoroutine(WaitDestroy(m_time));
+        StartCoroutine(WaitDestroy(m_shooing.m_range));
     }
 
     private IEnumerator WaitDestroy(float time)
@@ -25,10 +24,9 @@ public class Destroy : MonoBehaviour
         if (collision.transform.name == "Capsule") //#TODO #jack change to player
             return;
 
-        if (collision.transform.CompareTag("Enemy"))
-            Debug.Log(collision.transform.name);
+        m_shooing.OnHit(collision);
 
-        if (m_bounceAmount < m_bounces)
+        if (m_bounceAmount < m_shooing.m_bounces)
         {
             m_bounceAmount++;
             return;

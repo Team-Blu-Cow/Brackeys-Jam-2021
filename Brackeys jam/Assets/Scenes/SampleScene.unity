@@ -396,7 +396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146286912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.03, y: 5.59, z: 0}
+  m_LocalPosition: {x: 25, y: 5.59, z: 0}
   m_LocalScale: {x: 50, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -972,7 +972,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh36468
+  m_Name: pb_Mesh19930
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1180,6 +1180,8 @@ MonoBehaviour:
   m_recoil: 0
   m_spread: 0.01
   m_range: 5
+  m_explosiveRadius: 2
+  m_hitType: 1
   style:
     m_Name: 
     m_Normal:
@@ -1247,6 +1249,8 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  m_debug: 1
+  m_maxDebugBullets: 10
   m_bullet: {fileID: 7508371734735609996, guid: 85ae409134254f44eb4c4fc8695ab7d8, type: 3}
   m_bulletSpeed: 30
   m_bounces: 1
@@ -1892,6 +1896,8 @@ MonoBehaviour:
   m_recoil: 0
   m_spread: 0.01
   m_range: 100
+  m_explosiveRadius: 2
+  m_hitType: 0
   style:
     m_Name: 
     m_Normal:
@@ -1961,6 +1967,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   m_debug: 1
   m_maxDebugBullets: 10
+  spread: {x: 0, y: 0, z: 0}
 --- !u!4 &2018681561
 Transform:
   m_ObjectHideFlags: 0

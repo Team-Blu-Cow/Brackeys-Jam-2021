@@ -4,6 +4,12 @@ using UnityEngine;
 
 abstract public class BaseShooting : MonoBehaviour
 {
+    public enum HitType
+    {
+        Normal,
+        Explosive
+    }
+
     // Variables to edit for skills
     public int m_ammo;
 
@@ -13,15 +19,22 @@ abstract public class BaseShooting : MonoBehaviour
     public float m_recoil;
     public float m_spread;
     public float m_range;
+    public float m_explosiveRadius;
+    public HitType m_hitType;
 
     // variables used within the class
     private float m_fireCooldown;
 
     private float m_reloadCooldown;
-
+    
     public GUIStyle style;
 
     private DebugLabels m_debuglabels;
+
+    public bool m_debug;
+
+    public int m_maxDebugBullets;
+    private Queue<GameObject> m_debugBullets = new Queue<GameObject>();
 
     // Start is called before the first frame update
     public void Start()
@@ -72,6 +85,72 @@ abstract public class BaseShooting : MonoBehaviour
             Reload();
 
         return true;
+    }
+
+    public virtual void OnHit(RaycastHit hit)
+    {
+        OnHit(hit.transform, hit.point);
+    }
+
+    public virtual void OnHit(Collision hit)
+    {
+        OnHit(hit.transform, hit.GetContact(0).point);
+    }
+
+    protected void SpawnDebug(Vector3 point)
+    {
+        if (m_debug)
+        {
+            // Spawn a new object to draw the given bullets trail
+            GameObject tempBullet = new GameObject("Debug-Bullet");
+            m_debugBullets.Enqueue(tempBullet);
+
+            DebugBullet debugBullet = tempBullet.AddComponent<DebugBullet>();
+
+            debugBullet.m_range = m_range;
+            debugBullet.m_shooting = this;
+            debugBullet.m_hitType = m_hitType;
+            debugBullet.m_hitPos = point;
+
+            tempBullet.transform.position = Camera.main.transform.position;
+            if (this is HitscanShooting)
+            {
+                HitscanShooting hitscan = (HitscanShooting)this;
+                tempBullet.transform.forward = Camera.main.transform.forward + hitscan.spread;
+            }
+
+            // Clear more than max amount of bullets
+            if (m_debugBullets.Count > m_maxDebugBullets)
+                Destroy(m_debugBullets.Dequeue());
+        }
+    }
+
+    public virtual void OnHit(Transform hit, Vector3 point)
+    {
+        switch (m_hitType)
+        {
+            case HitType.Normal:
+                if (hit.CompareTag("Enemy"))
+                    Debug.Log(hit.name);
+                //Deal damage to hit
+                break;
+
+            case HitType.Explosive:
+                Collider[] collisions = Physics.OverlapSphere(point, m_explosiveRadius);
+
+                foreach (Collider collider in collisions)
+                    if (collider.CompareTag("Enemy"))
+                        Debug.Log(collider.name);
+
+                //Deal damage in an area of hit
+                break;
+
+            default:
+                break;
+        }
+
+        SpawnDebug(point);
+
     }
 
     public void Reload()

@@ -21,8 +21,8 @@ public class ProjectileShooting : BaseShooting
         GameObject bullet = Instantiate(m_bullet, camTransform.position + camTransform.forward, Quaternion.identity);
 
         bullet.GetComponent<Rigidbody>().AddForce(camTransform.forward * m_bulletSpeed, ForceMode.Impulse);
-        bullet.GetComponent<Destroy>().m_bounces = m_bounces;
-        bullet.GetComponent<Destroy>().m_time = m_range;
+
+        bullet.GetComponent<DestroyProjectile>().m_shooing = this;
 
         return true;
     }
