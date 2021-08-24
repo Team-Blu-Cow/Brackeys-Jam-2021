@@ -29,7 +29,7 @@ public class HitscanShooting : BaseShooting
         if (m_debug)
         {
             // Spawn a new object to draw the given bullets trail
-            GameObject tempBullet = new GameObject("Bullet");
+            GameObject tempBullet = new GameObject("Debug-Bullet");
             m_debugBullets.Enqueue(tempBullet);
 
             tempBullet.AddComponent<DebugBullet>();

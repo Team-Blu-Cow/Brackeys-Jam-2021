@@ -41,7 +41,10 @@ abstract public class BaseShooting : MonoBehaviour
 
         if (m_reloadCooldown < m_reloadSpeed)
             m_reloadCooldown += Time.deltaTime;
+    }
 
+    private void LateUpdate()
+    {
         // Add labels to debug
         if (m_debuglabels != null)
         {

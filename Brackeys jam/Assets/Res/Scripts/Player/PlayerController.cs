@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         _input.Player.Fire.performed += ctx => _controls._fireButton.Performed();
         _input.Player.Fire.started += ctx => _controls._fireButton.Started();
         _input.Player.Fire.canceled += ctx => _controls._fireButton.Canceled();
-        
+
         _input.Player.Reload.performed += ctx => _controls._reloadButton.Performed();
         _input.Player.Reload.started += ctx => _controls._reloadButton.Started();
         _input.Player.Reload.canceled += ctx => _controls._reloadButton.Canceled();
@@ -213,7 +213,10 @@ public class PlayerController : MonoBehaviour
             transform.position.z);
 
         _controls.ResetInputs();
+    }
 
+    private void LateUpdate()
+    {
         if (m_debuglabels != null)
         {
             var ups = _controller.velocity;
