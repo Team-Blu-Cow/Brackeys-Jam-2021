@@ -10,16 +10,8 @@ abstract public class BaseShooting : MonoBehaviour
         Explosive
     }
 
-    // Variables to edit for skills
-    public int m_ammo;
+    public Modifiers m_modifiers;
 
-    public int m_maxAmmo;
-    public float m_reloadSpeed;
-    public float m_fireRate;
-    public float m_recoil;
-    public float m_spread;
-    public float m_range;
-    public float m_explosiveRadius;
     public HitType m_hitType;
 
     // variables used within the class
@@ -39,20 +31,20 @@ abstract public class BaseShooting : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        m_reloadCooldown = m_reloadSpeed;
-        m_fireCooldown = m_fireRate;
+        m_reloadCooldown = m_modifiers.m_reloadSpeed;
+        m_fireCooldown = m_modifiers.m_fireRate;
 
-        m_debuglabels = FindObjectOfType<DebugLabels>();
+        m_debuglabels = FindObjectOfType<DebugLabels>();                
     }
 
     // Update is called once per frame
     public void Update()
     {
         // Add the time that has passed to the shooting cool downs
-        if (m_fireCooldown < m_fireRate)
+        if (m_fireCooldown < m_modifiers.m_fireRate)
             m_fireCooldown += Time.deltaTime;
 
-        if (m_reloadCooldown < m_reloadSpeed)
+        if (m_reloadCooldown < m_modifiers.m_reloadSpeed)
             m_reloadCooldown += Time.deltaTime;
     }
 
@@ -63,7 +55,7 @@ abstract public class BaseShooting : MonoBehaviour
         {
             m_debuglabels.Add(new List<string>
             {
-                "Ammo: " + m_ammo,
+                "Ammo: " + m_modifiers.m_ammo,
                 "Reload: " + m_reloadCooldown,
                 "Fire Rate: " + m_fireCooldown
             });
@@ -73,15 +65,15 @@ abstract public class BaseShooting : MonoBehaviour
     public virtual bool Shoot()
     {
         // Check if the player is allowed to shoot
-        if (m_ammo == 0 || m_fireCooldown < m_fireRate || m_reloadCooldown < m_reloadSpeed)
+        if (m_modifiers.m_ammo == 0 || m_fireCooldown < m_modifiers.m_fireRate || m_reloadCooldown < m_modifiers.m_reloadSpeed)
             return false;
 
         // Take away shot
         m_fireCooldown = 0;
-        m_ammo--;
+        m_modifiers.m_ammo--;
 
         // Check if player has to reload
-        if (m_ammo == 0)
+        if (m_modifiers.m_ammo == 0)
             Reload();
 
         return true;
@@ -107,7 +99,7 @@ abstract public class BaseShooting : MonoBehaviour
 
             DebugBullet debugBullet = tempBullet.AddComponent<DebugBullet>();
 
-            debugBullet.m_range = m_range;
+            debugBullet.m_range = m_modifiers.m_range;
             debugBullet.m_shooting = this;
             debugBullet.m_hitType = m_hitType;
             debugBullet.m_hitPos = point;
@@ -125,22 +117,31 @@ abstract public class BaseShooting : MonoBehaviour
         }
     }
 
-    public virtual void OnHit(Transform hit, Vector3 point)
+    public virtual bool OnHit(Transform hit, Vector3 point)
     {
+        bool damaged = false;
+
         switch (m_hitType)
         {
             case HitType.Normal:
                 if (hit.CompareTag("Enemy"))
+                {
                     Debug.Log(hit.name);
+                    damaged = true;
+                }
                 //Deal damage to hit
                 break;
 
             case HitType.Explosive:
-                Collider[] collisions = Physics.OverlapSphere(point, m_explosiveRadius);
+                Collider[] collisions = Physics.OverlapSphere(point, m_modifiers.m_explosiveRadius);
 
                 foreach (Collider collider in collisions)
                     if (collider.CompareTag("Enemy"))
+                    {
                         Debug.Log(collider.name);
+                        damaged = true;
+                    }
+
 
                 //Deal damage in an area of hit
                 break;
@@ -150,14 +151,14 @@ abstract public class BaseShooting : MonoBehaviour
         }
 
         SpawnDebug(point);
-
+        return damaged;
     }
 
     public void Reload()
     {
-        if (m_reloadCooldown >= m_reloadSpeed)
+        if (m_reloadCooldown >= m_modifiers.m_reloadSpeed)
         {
-            StartCoroutine(SetAmmo(m_reloadSpeed));
+            StartCoroutine(SetAmmo(m_modifiers.m_reloadSpeed));
             // Reset reload cooldown
             m_reloadCooldown = 0;
         }
@@ -167,7 +168,7 @@ abstract public class BaseShooting : MonoBehaviour
     public IEnumerator SetAmmo(float ReloadSpeed)
     {
         yield return new WaitForSeconds(ReloadSpeed);
-        m_ammo = m_maxAmmo;
+        m_modifiers.m_ammo = m_modifiers.m_maxAmmo;
     }
 
     private void OnDrawGizmos()
@@ -176,7 +177,7 @@ abstract public class BaseShooting : MonoBehaviour
         Transform camTransform = Camera.main.transform;
 
         Gizmos.color = Color.red;
-        Vector3 direction = camTransform.TransformDirection(Vector3.forward) * m_range;
+        Vector3 direction = camTransform.TransformDirection(Vector3.forward) * m_modifiers.m_range;
         Gizmos.DrawRay(camTransform.position, direction);
     }
 }

@@ -1173,15 +1173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c568562bc2fcd94587fef6219396383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ammo: 10
-  m_maxAmmo: 10
-  m_reloadSpeed: 1
-  m_fireRate: 0.5
-  m_recoil: 0
-  m_spread: 0.01
-  m_range: 5
-  m_explosiveRadius: 2
-  m_hitType: 1
+  m_modifiers: {fileID: 1274428492}
+  m_hitType: 0
   style:
     m_Name: 
     m_Normal:
@@ -1268,6 +1261,7 @@ GameObject:
   - component: {fileID: 1274428488}
   - component: {fileID: 1274428486}
   - component: {fileID: 1274428487}
+  - component: {fileID: 1274428492}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1424,6 +1418,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1274428492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274428485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf22f966c8320d48a3e1617ab2a2a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ammo: 10
+  m_maxAmmo: 10
+  m_reloadSpeed: 1
+  m_fireRate: 0.5
+  m_recoil: 0
+  m_spread: 0.01
+  m_range: 50
+  m_explosiveRadius: 3
 --- !u!1 &1582905944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,14 +1903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030cfeba8ef46b840bddd7c5ee6fa5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ammo: 10
-  m_maxAmmo: 10
-  m_reloadSpeed: 2
-  m_fireRate: 0.5
-  m_recoil: 0
-  m_spread: 0.01
-  m_range: 100
-  m_explosiveRadius: 2
+  m_modifiers: {fileID: 1274428492}
   m_hitType: 0
   style:
     m_Name: 

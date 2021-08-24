@@ -29,7 +29,7 @@ public class DebugBullet : MonoBehaviour
         Gizmos.color = new Color(0, 0, 1, 0.5f);
 
         if (m_hitType == BaseShooting.HitType.Explosive)
-            sphereSize = m_shooting.m_explosiveRadius;
+            sphereSize = m_shooting.m_modifiers.m_explosiveRadius;
 
         // get the shorter distance and draw a sphere
         if (m_hit || m_shooting is ProjectileShooting)

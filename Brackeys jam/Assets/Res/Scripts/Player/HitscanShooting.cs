@@ -13,12 +13,12 @@ public class HitscanShooting : BaseShooting
             return false;
 
         // Random spread of the bullet
-        spread = new Vector3(Random.Range(-m_spread, m_spread), Random.Range(-m_spread, m_spread), 0);
+        spread = new Vector3(Random.Range(-m_modifiers.m_spread, m_modifiers.m_spread), Random.Range(-m_modifiers.m_spread, m_modifiers.m_spread), 0);
 
         Transform camTrasform = Camera.main.transform;
 
         // Check what the bullet hits if anything
-        if (Physics.Raycast(camTrasform.position, camTrasform.forward + spread, out RaycastHit hit, m_range))
+        if (Physics.Raycast(camTrasform.position, camTrasform.forward + spread, out RaycastHit hit, m_modifiers.m_range))
         {
             OnHit(hit);
         }
