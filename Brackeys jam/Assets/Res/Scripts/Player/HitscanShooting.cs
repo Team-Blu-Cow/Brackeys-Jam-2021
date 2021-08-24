@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class HitscanShooting : BaseShooting
 {
+    [Header("Hitscan specific")]
     public bool m_debug;
+
     public int m_maxDebugBullets;
     private Queue<GameObject> m_debugBullets = new Queue<GameObject>();
 

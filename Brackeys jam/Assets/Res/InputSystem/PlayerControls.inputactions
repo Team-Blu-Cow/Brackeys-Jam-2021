@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "CycleWeapon",
+                    "type": "Value",
+                    "id": "58b1d29f-6615-4f28-8a76-a76484efbb36",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -143,6 +151,17 @@
                     "processors": "",
                     "groups": "KB",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "536c3c0b-e100-4e99-a5e0-a5dbefb6707c",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KB",
+                    "action": "CycleWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

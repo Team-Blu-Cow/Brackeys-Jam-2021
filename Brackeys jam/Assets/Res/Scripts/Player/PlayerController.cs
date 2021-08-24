@@ -94,7 +94,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField, HideInInspector] private PlayerControls _input;
 
     [SerializeField] private PlayerInputs _controls;
-    [SerializeField] private BaseShooting _shooting;
+
+    [Header("Weapon")]
+    [SerializeField] private BaseShooting[] _shooting;
+    private int _shootingIndex;
+    private float _swapCooldown = 0.5f;
 
     [SerializeField] private DebugLabels m_debuglabels;
 
@@ -125,6 +129,8 @@ public class PlayerController : MonoBehaviour
         _input.Player.Reload.performed += ctx => _controls._reloadButton.Performed();
         _input.Player.Reload.started += ctx => _controls._reloadButton.Started();
         _input.Player.Reload.canceled += ctx => _controls._reloadButton.Canceled();
+
+        _input.Player.CycleWeapon.performed += ctx => SwapWeapon(ctx);
     }
 
     private void Start()
@@ -170,11 +176,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             if (_controls._fireButton._performed) //#TODO #jack change this to be when not paused
-                _shooting.Shoot();
+                _shooting[_shootingIndex].Shoot();
         }
 
         if (_controls._reloadButton._started)
-            _shooting.Reload();
+            _shooting[_shootingIndex].Reload();
 
         /* Camera rotation stuff, mouse controls this shit */
         rotX -= _controls._aimVec.y * xMouseSensitivity * 0.02f;
@@ -213,6 +219,9 @@ public class PlayerController : MonoBehaviour
             transform.position.z);
 
         _controls.ResetInputs();
+
+        if (_swapCooldown < 0.5)        
+            _swapCooldown += Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -225,7 +234,8 @@ public class PlayerController : MonoBehaviour
             {
                 "FPS: " + fps,
                 "Speed: " + Mathf.Round(ups.magnitude * 100) / 100 + "ups",
-                "Top Speed: " + Mathf.Round(playerTopVelocity * 100) / 100 + "ups"
+                "Top Speed: " + Mathf.Round(playerTopVelocity * 100) / 100 + "ups",
+                "Active Weapon: " + _shooting[_shootingIndex].name
             });
         }
     }
@@ -438,6 +448,28 @@ public class PlayerController : MonoBehaviour
 
         playerVelocity.x += accelspeed * wishdir.x;
         playerVelocity.z += accelspeed * wishdir.z;
+    }
+
+    public void SwapWeapon(InputAction.CallbackContext ctx)
+    {
+        if (_swapCooldown >= 0.5f)
+        {
+            _shooting[_shootingIndex].enabled = false;
+
+            // go to next weapon
+            _shootingIndex += (int)Mathf.Sign(ctx.ReadValue<float>());
+
+            // loop back to start
+            if (_shootingIndex > _shooting.Length - 1)
+                _shootingIndex = 0;
+
+            if (_shootingIndex < 0)
+                _shootingIndex = _shooting.Length - 1;
+
+            _shooting[_shootingIndex].enabled = true;
+
+            _swapCooldown = 0;
+        }
     }
 }
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Destroy : MonoBehaviour
 {
     public float m_time;
+    [HideInInspector] public int m_bounces;
+    private int m_bounceAmount;
 
     // Start is called before the first frame update
     private void Start()
@@ -20,10 +22,18 @@ public class Destroy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.name == "Capsule") //#TODO #jack change to player
+            return;
+
         if (collision.transform.CompareTag("Enemy"))
             Debug.Log(collision.transform.name);
 
-        if (collision.transform.name != "Capsule")
-            Destroy(gameObject);
+        if (m_bounceAmount < m_bounces)
+        {
+            m_bounceAmount++;
+            return;
+        }
+
+        Destroy(gameObject);
     }
 }
