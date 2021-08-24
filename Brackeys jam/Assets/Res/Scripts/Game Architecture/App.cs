@@ -64,7 +64,7 @@ namespace blu
             _moduleManager.AddModule<blu.SettingsModule>();
             _moduleManager.AddModule<blu.SceneModule>();
             _moduleManager.AddModule<blu.InputModule>();
-            //_moduleManager.AddModule<blu.AudioModule>(); // not nessessary, included for readablility
+            _moduleManager.AddModule<blu.SettingsModule>();
         }
 
         public static T GetModule<T>() where T : blu.Module
