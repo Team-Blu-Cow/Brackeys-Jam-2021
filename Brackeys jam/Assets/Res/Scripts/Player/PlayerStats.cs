@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public enum Stats : int
 {
@@ -10,6 +12,7 @@ public enum Stats : int
     jump_height = 2,
     gravity,
     move_friction,
+    vision,
 
 }
 /*
@@ -40,6 +43,8 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField, HideInInspector] private PlayerUpgrade[] upgrades;
     [SerializeField, HideInInspector] private PlayerController playerController;
+    [SerializeField] private Volume cameraVolume;
+    [SerializeField] private PSX.Fog fogShader;
 
     [SerializeField] public UpgradeDataList upgradeData;
 
@@ -47,12 +52,17 @@ public class PlayerStats : MonoBehaviour
     {
         upgrades = Resources.LoadAll<PlayerUpgrade>("Upgrades");
         playerController = GetComponent<PlayerController>();
+        cameraVolume = Camera.main.GetComponent<Volume>();
+        cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
 
         Array.Sort(upgrades);
     }
 
     private void Start()
     {
+        cameraVolume = Camera.main.GetComponent<Volume>();
+        cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
+
         InitStats();
     }
 
@@ -124,6 +134,13 @@ public class PlayerStats : MonoBehaviour
                     break;
                 }
 
+            case Stats.vision:
+                {
+                    float fogDistance;
+                    upgradeData[index].GetValue(out fogDistance);
+                    fogShader.fogDistance.SetValue(new FloatParameter(fogDistance));
+                    break;
+                }
 
             default:
                 {

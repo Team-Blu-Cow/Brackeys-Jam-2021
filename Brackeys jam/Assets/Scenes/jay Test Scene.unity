@@ -326,7 +326,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbe70966da3bfe549a80d861c890bf98, type: 2}
   - {fileID: 11400000, guid: a291835c337a8334aa338e9cc89d76f9, type: 2}
   - {fileID: 11400000, guid: f6ed3ac586bf04348b6533adf994f99d, type: 2}
+  - {fileID: 11400000, guid: 68b25caaa0a71f340ab67e4ae22848db, type: 2}
   playerController: {fileID: 477463924}
+  cameraVolume: {fileID: 1041339977}
+  fogShader: {fileID: 0}
   upgradeData:
     data: []
 --- !u!114 &477463924

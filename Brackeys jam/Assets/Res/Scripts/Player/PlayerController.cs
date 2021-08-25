@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public float base_JumpSpeed = 8f;
     public float base_Gravity = 20f;
     public float base_Friction = 6f;
+    public float base_Vision = 50f;
 
     [Header("current values")]
     public Transform playerView;     // Camera
