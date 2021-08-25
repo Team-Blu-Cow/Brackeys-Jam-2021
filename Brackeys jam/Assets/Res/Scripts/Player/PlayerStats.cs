@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public enum Stats : int
 {
@@ -10,7 +12,9 @@ public enum Stats : int
     jump_height = 2,
     gravity,
     move_friction,
-    fire_rate
+    fire_rate,
+    vision
+        
 }
 
 /*
@@ -41,7 +45,12 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField, HideInInspector] private PlayerUpgrade[] upgrades;
     [SerializeField, HideInInspector] private PlayerController playerController;
+
     [SerializeField, HideInInspector] private Modifiers modifiers;
+
+    [SerializeField] private Volume cameraVolume;
+    [SerializeField] private PSX.Fog fogShader;
+
 
     [SerializeField] public UpgradeDataList upgradeData;
 
@@ -49,13 +58,21 @@ public class PlayerStats : MonoBehaviour
     {
         upgrades = Resources.LoadAll<PlayerUpgrade>("Upgrades");
         playerController = GetComponent<PlayerController>();
+
         modifiers = playerController._gun;
+
+        cameraVolume = Camera.main.GetComponent<Volume>();
+        cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
+
 
         Array.Sort(upgrades);
     }
 
     private void Start()
     {
+        cameraVolume = Camera.main.GetComponent<Volume>();
+        cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
+
         InitStats();
     }
 
@@ -128,11 +145,21 @@ public class PlayerStats : MonoBehaviour
                     break;
                 }
 
+
             case Stats.fire_rate:
                 {
                     float multiplier;
                     upgradeData[index].GetValue(out multiplier);
                     modifiers.m_fireRate = modifiers.base_fireRate * multiplier;
+                    break;
+                }
+
+            case Stats.vision:
+                {
+                    float fogDistance;
+                    upgradeData[index].GetValue(out fogDistance);
+                    fogShader.fogDistance.SetValue(new FloatParameter(fogDistance));
+
                     break;
                 }
 
