@@ -10,7 +10,7 @@ abstract public class BaseShooting : MonoBehaviour
         Explosive
     }
 
-    public Modifiers m_modifiers;
+    [SerializeField, HideInInspector] public Modifiers m_modifiers;
 
     public HitType m_hitType;
 
@@ -47,6 +47,7 @@ abstract public class BaseShooting : MonoBehaviour
     private void OnValidate()
     {
         _input = new PlayerControls();
+        m_modifiers = GetComponentInParent<Modifiers>();
     }
 
     // Start is called before the first frame update

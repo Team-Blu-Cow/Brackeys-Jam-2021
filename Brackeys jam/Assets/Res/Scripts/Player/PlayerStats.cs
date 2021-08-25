@@ -49,7 +49,7 @@ public class PlayerStats : MonoBehaviour
     {
         upgrades = Resources.LoadAll<PlayerUpgrade>("Upgrades");
         playerController = GetComponent<PlayerController>();
-        modifiers = GetComponent<Modifiers>();
+        modifiers = playerController._gun;
 
         Array.Sort(upgrades);
     }
