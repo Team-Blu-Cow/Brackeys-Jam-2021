@@ -40,8 +40,7 @@ public class HitscanShooting : BaseShooting
         Vector3 startingPos = position;
 
         Ray ray = new Ray(position, direction);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, range))
+        if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
@@ -56,7 +55,6 @@ public class HitscanShooting : BaseShooting
         {
             position += direction * range;
         }
-
         points.Add(position);
 
         return DrawReflectionPattern(position, direction, reflectionsRemaining - 1, range - Vector3.Distance(startingPos, position));

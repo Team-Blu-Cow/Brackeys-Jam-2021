@@ -34,4 +34,20 @@ public class DestroyProjectile : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.name == "Capsule") //#TODO #jack change to player
+            return;
+
+        m_shooing.OnHit(other.transform, transform.position);
+
+        if (m_bounceAmount < m_shooing.m_modifiers.m_bounces)
+        {
+            m_bounceAmount++;
+            return;
+        }
+
+        Destroy(gameObject);
+    }
 }

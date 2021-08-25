@@ -158,6 +158,7 @@ abstract public class BaseShooting : MonoBehaviour
                 if (hit.CompareTag("Enemy"))
                 {
                     Debug.Log(hit.name);
+                    hit.GetComponent<BasicPathfinder>().Hit();
                     damaged = true;
                 }
                 //Deal damage to hit
