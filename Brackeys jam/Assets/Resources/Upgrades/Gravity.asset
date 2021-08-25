@@ -10,33 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4308bad6d591e0a45a7433add9e46f8f, type: 3}
-  m_Name: AirJump
+  m_Name: Gravity
   m_EditorClassIdentifier: 
-  name: air jump
-  stat_effected: 1
+  name: gravity
+  stat_effected: 3
   increase_curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
+      time: -12
+      value: 2
+      inSlope: -0.07596257
+      outSlope: -0.07596257
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.09188553
+    - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      inSlope: -0.18258227
+      outSlope: -0.18258227
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 12
+      value: 0.5
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   default_value: 0
-  type: 1
+  type: 0

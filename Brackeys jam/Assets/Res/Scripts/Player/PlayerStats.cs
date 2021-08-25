@@ -5,7 +5,15 @@ using System;
 
 public enum Stats : int
 {
-    move_speed          = 0,
+    move_speed  = 0,
+    air_jump    = 1,
+    jump_height = 2,
+    gravity,
+    move_friction,
+
+}
+/*
+ * move_speed          = 0,
     move_friction       = 1,
     jump_height         = 2,
     gravity             = 3,
@@ -26,19 +34,19 @@ public enum Stats : int
     clip_size           = 18,
     reload_speed        = 19,
     crit_chance         = 20,
-}
-
+*/
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private PlayerUpgrade[] upgrades;
+    [SerializeField, HideInInspector] private PlayerUpgrade[] upgrades;
+    [SerializeField, HideInInspector] private PlayerController playerController;
 
-    //[SerializeField] public List<UpgradeData> upgradeData;
     [SerializeField] public UpgradeDataList upgradeData;
 
     private void OnValidate()
     {
         upgrades = Resources.LoadAll<PlayerUpgrade>("Upgrades");
+        playerController = GetComponent<PlayerController>();
 
         Array.Sort(upgrades);
     }
@@ -68,6 +76,62 @@ public class PlayerStats : MonoBehaviour
             upgradeData[index].Decrease();
         else if (value > 0)
             upgradeData[index].Increase();
+
+        ApplyUpdate(index);
+    }
+
+    public void ApplyUpdate(int index)
+    {
+        switch ((Stats)index)
+        {
+            case Stats.move_speed:
+                {
+                    float multiplier;
+                    upgradeData[index].GetValue(out multiplier);
+                    playerController.moveSpeed = playerController.base_MoveSpeed * multiplier;
+                    break;
+                }
+
+            case Stats.air_jump:
+                {
+                    int value;
+                    upgradeData[index].GetValue(out value);
+                    playerController.numberOfAirJumps = value;
+                    break;
+                }
+
+            case Stats.jump_height:
+                {
+                    float multiplier;
+                    upgradeData[index].GetValue(out multiplier);
+                    playerController.jumpSpeed = playerController.base_JumpSpeed * multiplier;
+                    break;
+                }
+
+            case Stats.gravity:
+                {
+                    float multiplier;
+                    upgradeData[index].GetValue(out multiplier);
+                    playerController.gravity = playerController.base_Gravity * multiplier;
+                    break;
+                }
+
+            case Stats.move_friction:
+                {
+                    float multiplier;
+                    upgradeData[index].GetValue(out multiplier);
+                    playerController.friction = playerController.base_Friction * multiplier;
+                    break;
+                }
+
+
+            default:
+                {
+
+                }
+                break;
+        }
+
     }
 }
 

@@ -10,28 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4308bad6d591e0a45a7433add9e46f8f, type: 3}
-  m_Name: AirJump
+  m_Name: jumpHeight
   m_EditorClassIdentifier: 
-  name: air jump
-  stat_effected: 1
+  name: jump height
+  stat_effected: 2
   increase_curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: -25
+      value: 0.5
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.07225769
     - serializedVersion: 3
-      time: 1
+      time: 0
       value: 1
+      inSlope: 0.04910154
+      outSlope: 0.14775237
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.107609965
+      outWeight: 0.010767166
+    - serializedVersion: 3
+      time: 50
+      value: 4
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -39,4 +48,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   default_value: 0
-  type: 1
+  type: 0

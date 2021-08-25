@@ -41,6 +41,14 @@ struct Cmd
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("base stats")]
+    public float base_MoveSpeed = 7.0f;
+    public int base_numberOfJumps = 0;
+    public float base_JumpSpeed = 8f;
+    public float base_Gravity = 20f;
+    public float base_Friction = 6f;
+
+    [Header("current values")]
     public Transform playerView;     // Camera
     public float playerViewYOffset = 0.6f; // The height at which the camera is bound to
     public float xMouseSensitivity = 30.0f;
@@ -62,6 +70,7 @@ public class PlayerController : MonoBehaviour
     public float sideStrafeSpeed = 1.0f;          // What the max speed to generate when side strafing
     public float jumpSpeed = 8.0f;                // The speed at which the character's up axis gains when hitting jump
     public bool holdJumpToBhop = false;           // When enabled allows player to just hold jump button to keep on bhopping perfectly. Beware: smells like casual.
+    public int numberOfAirJumps = 0;              // The number of times the player can air jump before touching the ground
 
     /*print() style */
     public GUIStyle style;
@@ -85,6 +94,7 @@ public class PlayerController : MonoBehaviour
 
     // Q3: players can queue the next jump just before he hits the ground
     private bool wishJump = false;
+    private int numJumpsLeft;
 
     // Used to display real time friction values
     private float playerFriction = 0.0f;
@@ -144,6 +154,8 @@ public class PlayerController : MonoBehaviour
             transform.position.y + playerViewYOffset,
             transform.position.z);
 
+        numJumpsLeft = numberOfAirJumps;
+
         SetInputs();
     }
 
@@ -184,7 +196,10 @@ public class PlayerController : MonoBehaviour
         /* Movement, here's the important part */
         QueueJump();
         if (_controller.isGrounded)
+        {
+            numJumpsLeft = numberOfAirJumps;
             GroundMove();
+        }
         else if (!_controller.isGrounded)
             AirMove();
 
@@ -236,7 +251,10 @@ public class PlayerController : MonoBehaviour
         }
 
         if (_controls._jumpButton._started && !wishJump)
+        {
             wishJump = true;
+            numJumpsLeft--;
+        }
         if (_controls._jumpButton._canceled)
             wishJump = false;
     }
@@ -282,6 +300,14 @@ public class PlayerController : MonoBehaviour
 
         // Apply gravity
         playerVelocity.y -= gravity * Time.deltaTime;
+
+
+        if (wishJump)
+        {
+            if(numJumpsLeft >= 0)
+                playerVelocity.y = jumpSpeed;
+            wishJump = false;
+        }
     }
 
     /**
@@ -332,7 +358,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 wishdir;
 
-        // Do not apply friction if the player is queueing up the next jump
+        // Do not apply friction if the player is queuing up the next jump
         if (!wishJump)
             ApplyFriction(1.0f);
         else
