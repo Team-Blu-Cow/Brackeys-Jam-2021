@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(menuName = "BrackeysJam/Upgrade")]
+[CreateAssetMenu(menuName = "BrackeysJam/Upgrade"), System.Serializable]
 public class PlayerUpgrade : ScriptableObject, IComparable<PlayerUpgrade>
 {
-    public string name;
-    
-    public Stats stat_effected;
+    [SerializeField] public string name;
 
-    public AnimationCurve increase_curve;
+    [SerializeField] public Stats stat_effected;
 
-    public float default_value;
+    [SerializeField] public AnimationCurve increase_curve;
+
+    [SerializeField] public int default_value;
 
     public enum Type
     {
@@ -20,7 +20,7 @@ public class PlayerUpgrade : ScriptableObject, IComparable<PlayerUpgrade>
         INT
     }
 
-    public PlayerUpgrade.Type type;
+    [SerializeField] public PlayerUpgrade.Type type;
 
     public int CompareTo(PlayerUpgrade other)
     {
@@ -33,27 +33,43 @@ public class PlayerUpgrade : ScriptableObject, IComparable<PlayerUpgrade>
         return (a.CompareTo(b));
     }
 
-    public IUpgradeData InitUpgradeData()
+    public UpgradeData InitUpgradeData()
     {
-        switch (type)
+        switch (stat_effected)
         {
-            case PlayerUpgrade.Type.FLOAT:
+
+
+            default:
+                switch (type)
                 {
-                    FloatUpgrade upgrade = new FloatUpgrade();
+                    case PlayerUpgrade.Type.FLOAT:
+                        {
+                            FloatUpgrade upgrade = new FloatUpgrade();
 
-                    upgrade.SO = this;
+                            upgrade.SO = this;
 
-                    return upgrade;
+                            upgrade.data = 0;
+
+                            upgrade.value = increase_curve.Evaluate(default_value);
+
+                            return upgrade;
+                        }
+
+                    case PlayerUpgrade.Type.INT:
+                        {
+                            IntUpgrade upgrade = new IntUpgrade();
+
+                            upgrade.SO = this;
+
+                            upgrade.data = 0;
+                            upgrade.minValue = Mathf.RoundToInt(increase_curve.Evaluate(0f));
+
+                            upgrade.value = default_value;
+
+                            return upgrade;
+                        }
                 }
-
-            case PlayerUpgrade.Type.INT:
-                {
-                    IntUpgrade upgrade = new IntUpgrade();
-
-                    upgrade.SO = this;
-
-                    return upgrade;
-                }
+                break;
         }
 
         return null;
