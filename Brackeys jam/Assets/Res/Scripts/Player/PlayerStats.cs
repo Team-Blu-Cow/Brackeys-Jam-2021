@@ -5,13 +5,14 @@ using System;
 
 public enum Stats : int
 {
-    move_speed  = 0,
-    air_jump    = 1,
+    move_speed = 0,
+    air_jump = 1,
     jump_height = 2,
     gravity,
     move_friction,
-
+    fire_rate
 }
+
 /*
  * move_speed          = 0,
     move_friction       = 1,
@@ -40,6 +41,7 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField, HideInInspector] private PlayerUpgrade[] upgrades;
     [SerializeField, HideInInspector] private PlayerController playerController;
+    [SerializeField, HideInInspector] private Modifiers modifiers;
 
     [SerializeField] public UpgradeDataList upgradeData;
 
@@ -47,6 +49,7 @@ public class PlayerStats : MonoBehaviour
     {
         upgrades = Resources.LoadAll<PlayerUpgrade>("Upgrades");
         playerController = GetComponent<PlayerController>();
+        modifiers = GetComponent<Modifiers>();
 
         Array.Sort(upgrades);
     }
@@ -61,7 +64,7 @@ public class PlayerStats : MonoBehaviour
         //upgradeData = new List<UpgradeData>();
         upgradeData.Init();
 
-        for(int i = 0; i < upgrades.Length; i++)
+        for (int i = 0; i < upgrades.Length; i++)
         {
             upgradeData.Add(upgrades[i].InitUpgradeData());
             upgradeData[i].type = upgrades[i].type;
@@ -70,9 +73,10 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void UpgradeStat(Stats index, int value) => UpgradeStat((int)index, value);
+
     public void UpgradeStat(int index, int value)
     {
-        if(value < 0)
+        if (value < 0)
             upgradeData[index].Decrease();
         else if (value > 0)
             upgradeData[index].Increase();
@@ -124,14 +128,19 @@ public class PlayerStats : MonoBehaviour
                     break;
                 }
 
+            case Stats.fire_rate:
+                {
+                    float multiplier;
+                    upgradeData[index].GetValue(out multiplier);
+                    modifiers.m_fireRate = modifiers.base_fireRate * multiplier;
+                    break;
+                }
 
             default:
                 {
-
                 }
                 break;
         }
-
     }
 }
 
@@ -161,16 +170,23 @@ public class UpgradeData
 
     [SerializeField] public int data;
 
-    public void GetValue(out int int_value)     => GetValue(out int_value, out _ );
-    public void GetValue(out float float_value) => GetValue(out _ , out float_value);
+    public void GetValue(out int int_value) => GetValue(out int_value, out _);
+
+    public void GetValue(out float float_value) => GetValue(out _, out float_value);
+
     public virtual void GetValue(out int int_value, out float float_value)
     {
         int_value = 1;
         float_value = 1f;
     }
 
-    public virtual void Increase() { }
-    public virtual void Decrease() { }
+    public virtual void Increase()
+    {
+    }
+
+    public virtual void Decrease()
+    {
+    }
 }
 
 [System.Serializable]
@@ -188,14 +204,14 @@ public class IntUpgrade : UpgradeData
     public override void Decrease()
     {
         data--;
-        if(data + SO.default_value >= SO.default_value)
+        if (data + SO.default_value >= SO.default_value)
             value--;
     }
 
     public override void Increase()
     {
         data++;
-        if(data + SO.default_value > SO.default_value)
+        if (data + SO.default_value > SO.default_value)
             value++;
     }
 }
@@ -223,7 +239,5 @@ public class FloatUpgrade : UpgradeData
         data++;
 
         value = SO.increase_curve.Evaluate(data);
-
     }
 }
-

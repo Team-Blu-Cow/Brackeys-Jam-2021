@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Modifiers : MonoBehaviour
 {
+    [Header("Base Stats")]
+    public int base_maxAmmo;
+
+    public float base_reloadSpeed;
+    public float base_fireRate;
+    public float base_recoil;
+    public float base_spread;
+    public float base_range;
+    public float base_explosiveRadius;
+    public int base_bounces;
+
+    [Header("Current values")]
     public int m_ammo;
 
     public int m_maxAmmo;

@@ -2482,6 +2482,7 @@ GameObject:
   - component: {fileID: 1274428486}
   - component: {fileID: 1274428487}
   - component: {fileID: 1274428489}
+  - component: {fileID: 1274428492}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -2519,6 +2520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02427efc72e29264ba3d015791567a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_MoveSpeed: 7
+  base_numberOfJumps: 0
+  base_JumpSpeed: 8
+  base_Gravity: 20
+  base_Friction: 6
   playerView: {fileID: 0}
   playerViewYOffset: 0.6
   xMouseSensitivity: 30
@@ -2535,6 +2541,7 @@ MonoBehaviour:
   sideStrafeSpeed: 1
   jumpSpeed: 8
   holdJumpToBhop: 0
+  numberOfAirJumps: 0
   fpsDisplayRate: 4
   _controller: {fileID: 1274428486}
   _controls:
@@ -2585,6 +2592,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf22f966c8320d48a3e1617ab2a2a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_maxAmmo: 10
+  base_reloadSpeed: 1
+  base_fireRate: 0.5
+  base_recoil: 0
+  base_spread: 0.01
+  base_range: 50
+  base_explosiveRadius: 3
+  base_bounces: 0
   m_ammo: 10
   m_maxAmmo: 10
   m_reloadSpeed: 1
@@ -2618,6 +2633,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1274428492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274428485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185dd67706f75374d8f3644a22d9e5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgrades:
+  - {fileID: 11400000, guid: f241eb5d551d2ed4f83ecfd2a9f1b6ca, type: 2}
+  - {fileID: 11400000, guid: d816abfaf01fbc24b8ad47447627b1e6, type: 2}
+  - {fileID: 11400000, guid: fbe70966da3bfe549a80d861c890bf98, type: 2}
+  - {fileID: 11400000, guid: a291835c337a8334aa338e9cc89d76f9, type: 2}
+  - {fileID: 11400000, guid: f6ed3ac586bf04348b6533adf994f99d, type: 2}
+  - {fileID: 11400000, guid: c648214e4b3659c4a8b670189578f2cd, type: 2}
+  playerController: {fileID: 1274428487}
+  modifiers: {fileID: 1274428489}
+  upgradeData:
+    data: []
 --- !u!43 &1396990565
 Mesh:
   m_ObjectHideFlags: 0
@@ -2792,7 +2830,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1543737540}
   - component: {fileID: 1543737539}
-  - component: {fileID: 1543737541}
   m_Layer: 0
   m_Name: debuglabels
   m_TagString: Untagged
@@ -2817,7 +2854,7 @@ MonoBehaviour:
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -2893,21 +2930,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1543737541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543737538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185dd67706f75374d8f3644a22d9e5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgrades:
-  - {fileID: 11400000, guid: d816abfaf01fbc24b8ad47447627b1e6, type: 2}
-  - {fileID: 11400000, guid: f241eb5d551d2ed4f83ecfd2a9f1b6ca, type: 2}
 --- !u!43 &1698491544
 Mesh:
   m_ObjectHideFlags: 0
@@ -3117,74 +3139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_modifiers: {fileID: 1274428489}
   m_hitType: 0
-  style:
-    m_Name: 
-    m_Normal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Hover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Active:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Focused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnNormal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnHover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnActive:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnFocused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Margin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Overflow:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Font: {fileID: 0}
-    m_FontSize: 0
-    m_FontStyle: 0
-    m_Alignment: 0
-    m_WordWrap: 0
-    m_RichText: 1
-    m_TextClipping: 0
-    m_ImagePosition: 0
-    m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 0
-    m_FixedHeight: 0
-    m_StretchWidth: 1
-    m_StretchHeight: 0
-  m_debug: 1
   m_maxDebugBullets: 5
   m_bullet: {fileID: 7508371734735609996, guid: 85ae409134254f44eb4c4fc8695ab7d8, type: 3}
   m_bulletSpeed: 50
@@ -3233,74 +3187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_modifiers: {fileID: 1274428489}
   m_hitType: 0
-  style:
-    m_Name: 
-    m_Normal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Hover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Active:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Focused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnNormal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnHover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnActive:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnFocused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Margin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Overflow:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Font: {fileID: 0}
-    m_FontSize: 0
-    m_FontStyle: 0
-    m_Alignment: 0
-    m_WordWrap: 0
-    m_RichText: 1
-    m_TextClipping: 0
-    m_ImagePosition: 0
-    m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 0
-    m_FixedHeight: 0
-    m_StretchWidth: 1
-    m_StretchHeight: 0
-  m_debug: 1
   m_maxDebugBullets: 5
   spread: {x: 0, y: 0, z: 0}
   points: []
