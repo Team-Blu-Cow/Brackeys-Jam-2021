@@ -37,8 +37,6 @@ public class PlayerUpgrade : ScriptableObject, IComparable<PlayerUpgrade>
     {
         switch (stat_effected)
         {
-
-
             default:
                 switch (type)
                 {
