@@ -423,7 +423,8 @@ MonoBehaviour:
   _health: 3
   _shotSpeed: 1
   _range: 50
-  _inaccuarcy: 0.15
+  _inaccuarcy: 0.12
+  _playerDistance: 10
 --- !u!43 &284642105
 Mesh:
   m_ObjectHideFlags: 0
@@ -588,13 +589,57 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1037690485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
+  m_Name: Fog(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  fogDensity:
+    m_OverrideState: 1
+    m_Value: 0.3
+  fogDistance:
+    m_OverrideState: 1
+    m_Value: 50
+  fogColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  fogNear:
+    m_OverrideState: 1
+    m_Value: 1
+  fogFar:
+    m_OverrideState: 1
+    m_Value: 100
+  fogAltScale:
+    m_OverrideState: 0
+    m_Value: 10
+  fogThinning:
+    m_OverrideState: 1
+    m_Value: 100
+  noiseScale:
+    m_OverrideState: 0
+    m_Value: 100
+  noiseStrength:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!43 &1044575441
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh44200
+  m_Name: pb_Mesh54124
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1780,50 +1825,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1183719106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
-  m_Name: Fog(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  fogDensity:
-    m_OverrideState: 1
-    m_Value: 0.3
-  fogDistance:
-    m_OverrideState: 1
-    m_Value: 50
-  fogColor:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  fogNear:
-    m_OverrideState: 1
-    m_Value: 1
-  fogFar:
-    m_OverrideState: 1
-    m_Value: 100
-  fogAltScale:
-    m_OverrideState: 0
-    m_Value: 10
-  fogThinning:
-    m_OverrideState: 1
-    m_Value: 100
-  noiseScale:
-    m_OverrideState: 0
-    m_Value: 100
-  noiseStrength:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!1 &1436632505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,7 +1979,7 @@ MonoBehaviour:
   playerController: {fileID: 1578018370}
   modifiers: {fileID: 1644627224}
   cameraVolume: {fileID: 86516990}
-  fogShader: {fileID: 1183719106}
+  fogShader: {fileID: 1037690485}
   upgradeData:
     data: []
 --- !u!114 &1578018370
