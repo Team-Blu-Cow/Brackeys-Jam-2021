@@ -17,6 +17,14 @@ public enum Stats : int
         
 }
 
+public static class StatExtentions
+{
+    public static string GetName(this Stats r)
+    {
+        return System.Enum.GetName(typeof(Stats), r);
+    }
+}
+
 /*
  *
     fire_rate           = 4,
