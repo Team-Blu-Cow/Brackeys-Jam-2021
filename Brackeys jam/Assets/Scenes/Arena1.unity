@@ -133,9 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 86516994}
   - component: {fileID: 86516993}
-  - component: {fileID: 86516992}
   - component: {fileID: 86516991}
   - component: {fileID: 86516990}
+  - component: {fileID: 86516992}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -192,14 +192,20 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &86516992
-AudioListener:
+--- !u!114 &86516992
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86516989}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 1578018368}
+  ListenerNumber: -1
 --- !u!20 &86516993
 Camera:
   m_ObjectHideFlags: 0
@@ -226,7 +232,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -419,11 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4230a423b889be4f8f2223c52b07170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1578018374}
   _health: 3
   _shotSpeed: 1
   _range: 50
   _inaccuarcy: 0.12
+  _player: {fileID: 1578018374}
   _playerDistance: 10
 --- !u!43 &284642105
 Mesh:
@@ -589,7 +595,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!114 &1037690485
+--- !u!114 &819525816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -639,7 +645,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh54124
+  m_Name: pb_Mesh23730
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1979,7 +1985,7 @@ MonoBehaviour:
   playerController: {fileID: 1578018370}
   modifiers: {fileID: 1644627224}
   cameraVolume: {fileID: 86516990}
-  fogShader: {fileID: 1037690485}
+  fogShader: {fileID: 819525816}
   upgradeData:
     data: []
 --- !u!114 &1578018370
@@ -2016,7 +2022,7 @@ MonoBehaviour:
   sideStrafeSpeed: 1
   jumpSpeed: 8
   holdJumpToBhop: 0
-  numberOfAirJumps: 0
+  numberOfAirJumps: 2
   fpsDisplayRate: 4
   _controller: {fileID: 1578018371}
   _controls:
@@ -2466,7 +2472,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

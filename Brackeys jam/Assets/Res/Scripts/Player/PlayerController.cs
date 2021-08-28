@@ -104,6 +104,11 @@ public class PlayerController : MonoBehaviour
     // Player commands, stores wish commands that the player asks for (Forward, back, jump, etc)
     private Cmd _cmd;
 
+    // SFX stuff
+    private float _footStepTimer = 0f;
+
+    private bool _groundedLastFrame = true;
+
     // Input system
     [SerializeField, HideInInspector] private PlayerControls _input;
 
@@ -229,6 +234,15 @@ public class PlayerController : MonoBehaviour
         playerView.rotation = Quaternion.Euler(rotX, rotY, 0); // Rotates the camera
 
         /* Movement, here's the important part */
+
+        if (_groundedLastFrame == false && _controller.isGrounded == true)
+        {
+            Debug.Log("Player Has Landed");
+            blu.App.GetModule<blu.AudioModule>().PlayAudioEvent("event:/SFX/Player/Land/Landing");
+        }
+
+        _groundedLastFrame = _controller.isGrounded;
+
         QueueJump();
         if (_controller.isGrounded)
         {
@@ -412,8 +426,28 @@ public class PlayerController : MonoBehaviour
      * Called every frame when the engine detects that the player is on the ground
      */
 
-    private void GroundMove()
+    private void GroundMove() // #adamGroundMovement
     {
+        if (_controller.velocity.magnitude > 0.5)
+        {
+            float inValue = 0f;
+            if (_controller.velocity.magnitude > 7)
+                inValue = 7;
+            else
+                inValue = _controller.velocity.magnitude;
+
+            blu.App.GetModule<blu.AudioModule>().GetAudioEvent("event:/SFX/Player/Walk/Walking").SetParameter("Speed", inValue);
+
+            float _stepRate = 0.25f;
+
+            _footStepTimer += Time.deltaTime;
+            if (_footStepTimer > _stepRate)
+            {
+                blu.App.GetModule<blu.AudioModule>().PlayAudioEvent("event:/SFX/Player/Walk/Walking");
+                _footStepTimer = 0f;
+            }
+        }
+
         Vector3 wishdir;
 
         // Do not apply friction if the player is queuing up the next jump

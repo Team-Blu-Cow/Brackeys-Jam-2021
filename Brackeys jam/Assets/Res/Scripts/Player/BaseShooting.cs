@@ -104,6 +104,7 @@ abstract public class BaseShooting : MonoBehaviour
         if (m_modifiers.m_ammo == 0)
             Reload();
 
+        blu.App.GetModule<blu.AudioModule>().PlayAudioEvent("event:/SFX/Player/Shoot/Shooting");
         return true;
     }
 
