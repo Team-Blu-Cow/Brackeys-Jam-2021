@@ -19,13 +19,22 @@ public class BasicPathfinder : BaseEnemy
     // Update is called once per frame
     protected override void Update()
     {
+
+        base.Update();
+        YBillboard();
+
         if (Vector3.Distance(_player.position, transform.position) > _playerDistance &&
         Vector3.Distance(_player.position, transform.position) < _aggroRange)
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);
+    }
 
-        base.Update();
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _playerDistance);
     }
 
     protected override void OnDrawGizmos()

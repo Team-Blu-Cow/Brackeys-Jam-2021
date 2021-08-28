@@ -22,7 +22,9 @@ public class FlyingEnemy : BaseEnemy
         Billboard();
 
         if (Vector3.Distance(_player.position, transform.position) > _playerDistance &&
-        Vector3.Distance(_player.position, transform.position) < _aggroRange)
+
+        Vector3.Distance(_player.position, transform.position) < _aggroRange )
+
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);

@@ -8,14 +8,16 @@ public class BaseEnemy : MonoBehaviour
 
     [SerializeField] protected float _shotSpeed;
     [SerializeField] protected float _range;
+    [SerializeField] protected float _aggroRange;
     [SerializeField] protected float _inaccuarcy;
     [SerializeField] protected float _aggroRange;
     protected float _shotCooldown;
+    protected bool LOS;
 
     public Transform _player;
 
     private Transform cam;
-
+    
     [SerializeField] protected bool showGizmo;
 
     public int Health
@@ -23,7 +25,7 @@ public class BaseEnemy : MonoBehaviour
         get { return _health; }
         set { _health = value; }
     }
-
+    
     protected virtual void Start()
     {
         cam = Camera.main.transform;
@@ -32,6 +34,16 @@ public class BaseEnemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        LOS = false;
+        Ray losRay = new Ray(transform.position, _player.position - transform.position);
+        if (Physics.Raycast(losRay, out RaycastHit losHit, _aggroRange))
+        {
+            if (losHit.transform.CompareTag("Player"))
+                LOS = true;
+        }
+
+        Debug.DrawRay(losRay.origin, losRay.direction * _aggroRange);
+
         if (Vector3.Distance(_player.position, transform.position) < _range)
         {
             if (_shotCooldown < _shotSpeed)
@@ -48,7 +60,7 @@ public class BaseEnemy : MonoBehaviour
                 Ray ray = new Ray(transform.position, transform.forward + new Vector3(xInac, yInac, zInac));
                 if (Physics.Raycast(ray, out RaycastHit hit, _range))
                 {
-                    if (hit.transform.name == "Capsule")
+                    if (hit.transform.CompareTag("Player"))
                     {
                         Debug.Log("Player Hit");
                         rayL = Vector3.Distance(hit.point, transform.position);
