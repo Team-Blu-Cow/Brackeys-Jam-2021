@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Vision
   m_EditorClassIdentifier: 
   name: 
-  stat_effected: 5
+  stat_effected: 6
   increase_curve:
     serializedVersion: 2
     m_Curve:

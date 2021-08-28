@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Rarity : int
 {
@@ -126,6 +127,35 @@ public class BoonController : MonoBehaviour
         foreach(var b in buttons)
         {
             b.SetBoons(RollBoon());
+            b.controller = this;
+            b.GetComponent<Button>().enabled = false;
+            b.GetComponent<UnityEngine.EventSystems.EventTrigger>().enabled = false;
+
+            b.transform.localScale = new Vector3(1, 0, 1);
+
+            LeanTween.scale(b.gameObject, Vector3.one, 0.5f)
+                .setEaseOutBack()
+                .setOnComplete(() =>
+                {
+                    b.GetComponent<Button>().enabled = true;
+                    b.GetComponent<UnityEngine.EventSystems.EventTrigger>().enabled = true;
+                });
+        }
+    }
+
+    public void DisableBoonButtons()
+    {
+        foreach(var b in buttons)
+        {
+            b.GetComponent<Button>().enabled = false;
+            b.GetComponent<UnityEngine.EventSystems.EventTrigger>().enabled = false;
+
+            LeanTween.scale(b.gameObject, new Vector3(1,0, 1), 0.5f)
+                .setEaseInBack()
+                .setOnComplete(() =>
+                {
+                    // do stuff later
+                });
         }
     }
 }

@@ -52,6 +52,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "debugMenu",
+                    "type": "Button",
+                    "id": "df8350b1-c1e2-4af0-a50f-14022746f824",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -162,6 +170,17 @@
                     "processors": "",
                     "groups": "KB",
                     "action": "CycleWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b15c669b-e077-4cdf-a5bd-3480d7db959a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KB",
+                    "action": "debugMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

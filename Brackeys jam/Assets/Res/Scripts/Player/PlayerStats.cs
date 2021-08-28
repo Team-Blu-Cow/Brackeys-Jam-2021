@@ -202,6 +202,11 @@ public class UpgradeData
 
     public void GetValue(out float float_value) => GetValue(out _, out float_value);
 
+    public float EvaluateCurve(float time)
+    {
+        return SO.increase_curve.Evaluate(data + time);
+    }
+
     public virtual void GetValue(out int int_value, out float float_value)
     {
         int_value = 1;
