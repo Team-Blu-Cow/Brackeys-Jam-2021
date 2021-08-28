@@ -81,6 +81,8 @@ public class BaseEnemy : MonoBehaviour
 
         if (_health <= 0)
         {
+            if (_player.GetComponent<PlayerController>()._enemiesRemaining >= 0)
+                _player.GetComponent<PlayerController>()._enemiesRemaining--;
             Destroy(gameObject);
         }
     }

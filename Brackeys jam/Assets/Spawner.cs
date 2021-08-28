@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private float spawnDistance;
 
-    [SerializeField] private int waveNo;
+    [SerializeField] public int waveNo;
 
     [SerializeField] private Transform _player;
 
@@ -49,6 +49,7 @@ public class Spawner : MonoBehaviour
         while (amountSpawned <= spawnAmount)
         {
             amountSpawned++;
+            _player.GetComponent<PlayerController>()._enemiesRemaining++;
 
             Vector3 spawnPos;
             int K = 0;
