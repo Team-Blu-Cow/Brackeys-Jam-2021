@@ -9,9 +9,25 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float _shotSpeed;
     [SerializeField] protected float _range;
     [SerializeField] protected float _inaccuarcy;
+    [SerializeField] protected float _aggroRange;
     protected float _shotCooldown;
 
     public Transform _player;
+
+    private Transform cam;
+
+    [SerializeField] protected bool showGizmo;
+
+    public int Health
+    {
+        get { return _health; }
+        set { _health = value; }
+    }
+
+    protected virtual void Start()
+    {
+        cam = Camera.main.transform;
+    }
 
     // Update is called once per frame
     protected virtual void Update()
@@ -56,5 +72,27 @@ public class BaseEnemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void OnDrawGizmos()
+    {
+        if (showGizmo)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _aggroRange);
+            Gizmos.DrawWireSphere(transform.position, _range);
+        }
+    }
+
+    protected void YBillboard()
+    {
+        transform.LookAt(cam);
+
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+    }
+
+    protected void Billboard()
+    {
+        transform.LookAt(cam);
     }
 }
