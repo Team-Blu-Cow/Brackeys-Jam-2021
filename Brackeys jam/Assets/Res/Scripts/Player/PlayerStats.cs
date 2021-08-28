@@ -17,23 +17,25 @@ public enum Stats : int
         
 }
 
+public static class StatExtentions
+{
+    public static string GetName(this Stats r)
+    {
+        return System.Enum.GetName(typeof(Stats), r);
+    }
+}
+
 /*
- * move_speed          = 0,
-    move_friction       = 1,
-    jump_height         = 2,
-    gravity             = 3,
+ *
     fire_rate           = 4,
     bullet_damage       = 5,
     sticky_bombs        = 6,
-    air_jump            = 7,
     hp_leech            = 8,
     max_hp              = 9,
     player_size         = 10,
     enemy_size          = 11,
     projectile_amount   = 12,
     bullet_recoil       = 13,
-    vision              = 14,
-    drunkness           = 15,
     damage_block        = 16,
     health_regen        = 17,
     clip_size           = 18,
@@ -48,11 +50,15 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField, HideInInspector] private Modifiers modifiers;
 
-    [SerializeField] private Volume cameraVolume;
-    [SerializeField] private PSX.Fog fogShader;
+    [SerializeField, HideInInspector] private Volume cameraVolume;
+    [SerializeField, HideInInspector] private PSX.Fog fogShader;
 
+    [SerializeField] private GameObject upgradeUIPrefab;
+    [SerializeField] private Camera uicam;
 
     [SerializeField] public UpgradeDataList upgradeData;
+
+    
 
     private void OnValidate()
     {
@@ -73,6 +79,8 @@ public class PlayerStats : MonoBehaviour
         cameraVolume = Camera.main.GetComponent<Volume>();
         cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
 
+        uicam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
+
         InitStats();
     }
 
@@ -90,7 +98,6 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void UpgradeStat(Stats index, int value) => UpgradeStat((int)index, value);
-
     public void UpgradeStat(int index, int value)
     {
         if (value < 0)
@@ -169,6 +176,20 @@ public class PlayerStats : MonoBehaviour
                 break;
         }
     }
+
+    public void ShowUI()
+    {
+        GameObject go = Instantiate(upgradeUIPrefab, Vector3.zero, Quaternion.identity);
+        go.GetComponentInChildren<BoonController>().stats = this;
+        go.GetComponent<Canvas>().worldCamera = uicam;
+        playerController.EnableInput(false);
+        go.GetComponentInChildren<BoonController>().Init();
+    }
+
+    public void DestroyUI()
+    {
+        playerController.EnableInput(true);
+    }
 }
 
 [System.Serializable]
@@ -200,6 +221,11 @@ public class UpgradeData
     public void GetValue(out int int_value) => GetValue(out int_value, out _);
 
     public void GetValue(out float float_value) => GetValue(out _, out float_value);
+
+    public float EvaluateCurve(float time)
+    {
+        return SO.increase_curve.Evaluate(data + time);
+    }
 
     public virtual void GetValue(out int int_value, out float float_value)
     {

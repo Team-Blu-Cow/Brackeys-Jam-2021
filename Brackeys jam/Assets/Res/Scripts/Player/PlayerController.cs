@@ -119,11 +119,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private DebugLabels m_debuglabels;
 
+    [SerializeField, HideInInspector] private PlayerStats _stats;
+
     private void OnValidate()
     {
         _input = new PlayerControls();
 
         _controller = GetComponent<CharacterController>();
+
+        _stats = GetComponent<PlayerStats>();
 
         if (m_debuglabels == null)
             m_debuglabels = FindObjectOfType<DebugLabels>();
@@ -152,6 +156,8 @@ public class PlayerController : MonoBehaviour
         _input.Player.Reload.canceled += ctx => _controls._reloadButton.Canceled();
 
         _input.Player.CycleWeapon.performed += ctx => SwapWeapon(ctx);
+
+        _input.Player.debugMenu.started += ctx => _controls._debugMenu.Started();
     }
 
     private void Awake()
@@ -186,6 +192,7 @@ public class PlayerController : MonoBehaviour
         numJumpsLeft = numberOfAirJumps;
 
         SetInputs();
+        //EnableInput(false);
     }
 
     private void Update()
@@ -258,6 +265,12 @@ public class PlayerController : MonoBehaviour
 
         if (_swapCooldown < 0.5)
             _swapCooldown += Time.deltaTime;
+
+        if(_controls._debugMenu._started)
+        {
+            _controls._debugMenu._started = false;
+            _stats.ShowUI();
+        }
     }
 
     private void LateUpdate()
@@ -279,6 +292,21 @@ public class PlayerController : MonoBehaviour
     private void OnEnable() => _input.Enable();
 
     private void OnDisable() => _input.Disable();
+
+    public void EnableInput(bool state)
+    {
+        if(state)
+        {
+            _input.Enable();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            return;
+        }
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        _input.Disable();
+    }
 
     /*******************************************************************************************************\
     |* MOVEMENT
@@ -527,6 +555,7 @@ public class PlayerInputs
     public ButtonInput _jumpButton;
     public ButtonInput _fireButton;
     public ButtonInput _reloadButton;
+    public ButtonInput _debugMenu;
 
     public Vector2 _moveVec;
     public Vector2 _aimVec;

@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""debugMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""df8350b1-c1e2-4af0-a50f-14022746f824"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -177,6 +185,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""CycleWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b15c669b-e077-4cdf-a5bd-3480d7db959a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KB"",
+                    ""action"": ""debugMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +227,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_CycleWeapon = m_Player.FindAction("CycleWeapon", throwIfNotFound: true);
+        m_Player_debugMenu = m_Player.FindAction("debugMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -263,6 +283,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_CycleWeapon;
+    private readonly InputAction m_Player_debugMenu;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -273,6 +294,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @CycleWeapon => m_Wrapper.m_Player_CycleWeapon;
+        public InputAction @debugMenu => m_Wrapper.m_Player_debugMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -300,6 +322,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
+                @debugMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
+                @debugMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
+                @debugMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -322,6 +347,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started += instance.OnCycleWeapon;
                 @CycleWeapon.performed += instance.OnCycleWeapon;
                 @CycleWeapon.canceled += instance.OnCycleWeapon;
+                @debugMenu.started += instance.OnDebugMenu;
+                @debugMenu.performed += instance.OnDebugMenu;
+                @debugMenu.canceled += instance.OnDebugMenu;
             }
         }
     }
@@ -343,5 +371,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnCycleWeapon(InputAction.CallbackContext context);
+        void OnDebugMenu(InputAction.CallbackContext context);
     }
 }

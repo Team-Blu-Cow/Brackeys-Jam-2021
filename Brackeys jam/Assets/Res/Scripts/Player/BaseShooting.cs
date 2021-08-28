@@ -204,6 +204,9 @@ abstract public class BaseShooting : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (m_modifiers == null)
+            return;
+
         // Draw line where player is looking
         Transform camTransform = Camera.main.transform;
 
