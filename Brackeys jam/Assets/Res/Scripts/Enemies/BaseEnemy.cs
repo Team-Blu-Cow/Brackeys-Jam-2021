@@ -10,14 +10,13 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float _range;
     [SerializeField] protected float _aggroRange;
     [SerializeField] protected float _inaccuarcy;
-    [SerializeField] protected float _aggroRange;
     protected float _shotCooldown;
     protected bool LOS;
 
     public Transform _player;
 
     private Transform cam;
-    
+
     [SerializeField] protected bool showGizmo;
 
     public int Health
@@ -25,7 +24,7 @@ public class BaseEnemy : MonoBehaviour
         get { return _health; }
         set { _health = value; }
     }
-    
+
     protected virtual void Start()
     {
         cam = Camera.main.transform;
