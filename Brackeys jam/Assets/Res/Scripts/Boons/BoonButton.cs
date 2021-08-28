@@ -7,7 +7,7 @@ public class BoonButton : MonoBehaviour
 {
     public BoonPair boons;
 
-    [SerializeField] private PlayerStats stats;
+    [HideInInspector] public PlayerStats stats;
     [HideInInspector] public BoonController controller;
 
     [SerializeField, HideInInspector] private TextMeshProUGUI blessingText;

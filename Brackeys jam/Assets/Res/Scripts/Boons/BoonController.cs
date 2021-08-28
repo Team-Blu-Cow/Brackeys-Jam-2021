@@ -29,6 +29,8 @@ public class BoonController : MonoBehaviour
     [SerializeField] private Boon[] rareCurses;
     [SerializeField] private Boon[] legendaryCurses;
 
+    public PlayerStats stats;
+
     [SerializeField] private BoonButton[] buttons;
 
     private int[] rarityTable =
@@ -53,10 +55,14 @@ public class BoonController : MonoBehaviour
 
     public void Start()
     {
+        
+    }
+
+    public void Init()
+    {
         rarityTotal = 0;
         foreach (var n in rarityTable)
             rarityTotal += n;
-
         SetBoonButtons();
     }
 
@@ -89,8 +95,12 @@ public class BoonController : MonoBehaviour
                     int r = Random.Range(0, commonBlessings.Length);
                     pair.blessing = commonBlessings[r];
 
-                    r = Random.Range(0, commonCurses.Length);
-                    pair.curse = commonCurses[r];
+                    do
+                    {
+                        r = Random.Range(0, commonCurses.Length);
+                        pair.curse = commonCurses[r];
+                    }
+                    while (pair.blessing.stat_effected == pair.curse.stat_effected);
 
                     break;
                 }
@@ -100,8 +110,12 @@ public class BoonController : MonoBehaviour
                     int r = Random.Range(0, rareBlessings.Length);
                     pair.blessing = rareBlessings[r];
 
-                    r = Random.Range(0, rareCurses.Length);
-                    pair.curse = rareCurses[r];
+                    do
+                    {
+                        r = Random.Range(0, rareCurses.Length);
+                        pair.curse = rareCurses[r];
+                    }
+                    while (pair.blessing.stat_effected == pair.curse.stat_effected);
 
                     break;
                 }
@@ -111,8 +125,12 @@ public class BoonController : MonoBehaviour
                     int r = Random.Range(0, legendaryBlessings.Length);
                     pair.blessing = legendaryBlessings[r];
 
-                    r = Random.Range(0, legendaryCurses.Length);
-                    pair.curse = legendaryCurses[r];
+                    do
+                    {
+                        r = Random.Range(0, legendaryCurses.Length);
+                        pair.curse = legendaryCurses[r];
+                    }
+                    while (pair.blessing.stat_effected == pair.curse.stat_effected);
 
                     break;
                 }
@@ -126,14 +144,15 @@ public class BoonController : MonoBehaviour
     {
         foreach(var b in buttons)
         {
-            b.SetBoons(RollBoon());
+            b.stats = stats;
             b.controller = this;
+            b.SetBoons(RollBoon());
             b.GetComponent<Button>().enabled = false;
             b.GetComponent<UnityEngine.EventSystems.EventTrigger>().enabled = false;
 
             b.transform.localScale = new Vector3(1, 0, 1);
 
-            LeanTween.scale(b.gameObject, Vector3.one, 0.5f)
+            LeanTween.scale(b.gameObject, Vector3.one, 1f)
                 .setEaseOutBack()
                 .setOnComplete(() =>
                 {
@@ -145,8 +164,10 @@ public class BoonController : MonoBehaviour
 
     public void DisableBoonButtons()
     {
-        foreach(var b in buttons)
+        for (int i = 0; i < buttons.Length; i++)
         {
+            var b = buttons[i];
+
             b.GetComponent<Button>().enabled = false;
             b.GetComponent<UnityEngine.EventSystems.EventTrigger>().enabled = false;
 
@@ -154,9 +175,15 @@ public class BoonController : MonoBehaviour
                 .setEaseInBack()
                 .setOnComplete(() =>
                 {
-                    // do stuff later
+                    DestroySelf();
                 });
         }
+    }
+
+    public void DestroySelf()
+    {
+        stats.DestroyUI();
+        Destroy(transform.parent.gameObject);
     }
 }
 

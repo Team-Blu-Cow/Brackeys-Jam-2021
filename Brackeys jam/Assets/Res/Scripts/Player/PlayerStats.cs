@@ -53,8 +53,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField, HideInInspector] private Volume cameraVolume;
     [SerializeField, HideInInspector] private PSX.Fog fogShader;
 
+    [SerializeField] private GameObject upgradeUIPrefab;
+    [SerializeField] private Camera uicam;
 
     [SerializeField] public UpgradeDataList upgradeData;
+
+    
 
     private void OnValidate()
     {
@@ -169,6 +173,20 @@ public class PlayerStats : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void ShowUI()
+    {
+        GameObject go = Instantiate(upgradeUIPrefab, Vector3.zero, Quaternion.identity);
+        go.GetComponentInChildren<BoonController>().stats = this;
+        go.GetComponent<Canvas>().worldCamera = uicam;
+        playerController.EnableInput(false);
+        go.GetComponentInChildren<BoonController>().Init();
+    }
+
+    public void DestroyUI()
+    {
+        playerController.EnableInput(true);
     }
 }
 

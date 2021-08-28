@@ -119,11 +119,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private DebugLabels m_debuglabels;
 
+    [SerializeField, HideInInspector] private PlayerStats _stats;
+
     private void OnValidate()
     {
         _input = new PlayerControls();
 
         _controller = GetComponent<CharacterController>();
+
+        _stats = GetComponent<PlayerStats>();
 
         if (m_debuglabels == null)
             m_debuglabels = FindObjectOfType<DebugLabels>();
@@ -153,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
         _input.Player.CycleWeapon.performed += ctx => SwapWeapon(ctx);
 
-        _input.Player.debugMenu.performed += ctx => _controls._debugMenu.Performed();
+        _input.Player.debugMenu.started += ctx => _controls._debugMenu.Started();
     }
 
     private void Awake()
@@ -188,7 +192,7 @@ public class PlayerController : MonoBehaviour
         numJumpsLeft = numberOfAirJumps;
 
         SetInputs();
-        EnableInput(false);
+        //EnableInput(false);
     }
 
     private void Update()
@@ -262,9 +266,10 @@ public class PlayerController : MonoBehaviour
         if (_swapCooldown < 0.5)
             _swapCooldown += Time.deltaTime;
 
-        if(_controls._debugMenu._performed)
+        if(_controls._debugMenu._started)
         {
-            EnableInput(false);
+            _controls._debugMenu._started = false;
+            _stats.ShowUI();
         }
     }
 
