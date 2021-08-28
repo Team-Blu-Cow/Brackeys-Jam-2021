@@ -79,6 +79,8 @@ public class PlayerStats : MonoBehaviour
         cameraVolume = Camera.main.GetComponent<Volume>();
         cameraVolume.profile.TryGet<PSX.Fog>(out fogShader);
 
+        uicam = Camera.main.transform.GetChild(0).GetComponent<Camera>();
+
         InitStats();
     }
 
