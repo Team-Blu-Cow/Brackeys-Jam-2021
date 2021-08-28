@@ -21,7 +21,7 @@ public class DestroyProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.name == "Capsule") //#TODO #jack change to player
+        if (collision.transform.CompareTag("Player"))
             return;
 
         m_shooing.OnHit(collision);
@@ -37,7 +37,7 @@ public class DestroyProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.name == "Capsule") //#TODO #jack change to player
+        if (other.transform.CompareTag("Player"))
             return;
 
         m_shooing.OnHit(other.transform, transform.position);
