@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
     private float _footStepTimer = 0f;
 
     private bool _groundedLastFrame = true;
+    private bool _hasJumped = false;
 
     // Input system
     [SerializeField, HideInInspector] private PlayerControls _input;
@@ -148,6 +149,8 @@ public class PlayerController : MonoBehaviour
         _input.Player.Jump.started += ctx => _controls._jumpButton.Started();
         _input.Player.Jump.canceled += ctx => _controls._jumpButton.Canceled();
 
+        _input.Player.ScrollJump.performed += ctx => HandleScrollWheel(ctx.ReadValue<float>());
+
         _input.Player.Fire.performed += ctx => _controls._fireButton.Performed();
         _input.Player.Fire.started += ctx => _controls._fireButton.Started();
         _input.Player.Fire.canceled += ctx => _controls._fireButton.Canceled();
@@ -157,6 +160,21 @@ public class PlayerController : MonoBehaviour
         _input.Player.Reload.canceled += ctx => _controls._reloadButton.Canceled();
 
         _input.Player.CycleWeapon.performed += ctx => SwapWeapon(ctx);
+    }
+
+    private void HandleScrollWheel(float in_value)
+    {
+        if (in_value < 0)
+        {
+            if (_controller.isGrounded)
+            {
+                _controls._jumpButton.Performed();
+                _controls._jumpButton.Started();
+            }
+        }
+
+        if (in_value == 0)
+            _controls._jumpButton.Canceled();
     }
 
     private void Awake()
@@ -193,7 +211,7 @@ public class PlayerController : MonoBehaviour
         SetInputs();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Do FPS calculation
         frameCount++;
@@ -237,8 +255,11 @@ public class PlayerController : MonoBehaviour
 
         if (_groundedLastFrame == false && _controller.isGrounded == true)
         {
-            Debug.Log("Player Has Landed");
-            blu.App.GetModule<blu.AudioModule>().PlayAudioEvent("event:/SFX/Player/Land/Landing");
+            if (_hasJumped)
+            {
+                Debug.Log("Player Has Landed");
+                blu.App.GetModule<blu.AudioModule>().PlayAudioEvent("event:/SFX/Player/Land/Landing");
+            }
         }
 
         _groundedLastFrame = _controller.isGrounded;
@@ -272,6 +293,15 @@ public class PlayerController : MonoBehaviour
 
         if (_swapCooldown < 0.5)
             _swapCooldown += Time.deltaTime;
+<<<<<<< Updated upstream
+=======
+
+        if (_controls._debugMenu._started)
+        {
+            _controls._debugMenu._started = false;
+            _stats.ShowUI();
+        }
+>>>>>>> Stashed changes
     }
 
     private void LateUpdate()
@@ -294,6 +324,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable() => _input.Disable();
 
+<<<<<<< Updated upstream
+=======
+    public void EnableInput(bool state)
+    {
+        if (state)
+        {
+            _input.Enable();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            return;
+        }
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        _input.Disable();
+    }
+
+>>>>>>> Stashed changes
     /*******************************************************************************************************\
     |* MOVEMENT
     \*******************************************************************************************************/
@@ -428,6 +476,7 @@ public class PlayerController : MonoBehaviour
 
     private void GroundMove() // #adamGroundMovement
     {
+        Debug.Log(_controller.velocity.magnitude);
         if (_controller.velocity.magnitude > 0.5)
         {
             float inValue = 0f;
@@ -475,6 +524,7 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = jumpSpeed;
             wishJump = false;
+            _hasJumped = true;
         }
     }
 

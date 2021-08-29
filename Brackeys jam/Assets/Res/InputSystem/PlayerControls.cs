@@ -65,6 +65,25 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+<<<<<<< Updated upstream
+=======
+                },
+                {
+                    ""name"": ""debugMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""df8350b1-c1e2-4af0-a50f-14022746f824"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ScrollJump"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3eceeb78-2b86-4214-b43e-21a1116368f5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+>>>>>>> Stashed changes
                 }
             ],
             ""bindings"": [
@@ -177,6 +196,31 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""CycleWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+<<<<<<< Updated upstream
+=======
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b15c669b-e077-4cdf-a5bd-3480d7db959a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KB"",
+                    ""action"": ""debugMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a0bb4dd-d406-4a4f-846a-f69ea51e1091"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+>>>>>>> Stashed changes
                 }
             ]
         }
@@ -208,6 +252,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_CycleWeapon = m_Player.FindAction("CycleWeapon", throwIfNotFound: true);
+<<<<<<< Updated upstream
+=======
+        m_Player_debugMenu = m_Player.FindAction("debugMenu", throwIfNotFound: true);
+        m_Player_ScrollJump = m_Player.FindAction("ScrollJump", throwIfNotFound: true);
+>>>>>>> Stashed changes
     }
 
     public void Dispose()
@@ -263,6 +312,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_CycleWeapon;
+<<<<<<< Updated upstream
+=======
+    private readonly InputAction m_Player_debugMenu;
+    private readonly InputAction m_Player_ScrollJump;
+>>>>>>> Stashed changes
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -273,6 +327,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @CycleWeapon => m_Wrapper.m_Player_CycleWeapon;
+<<<<<<< Updated upstream
+=======
+        public InputAction @debugMenu => m_Wrapper.m_Player_debugMenu;
+        public InputAction @ScrollJump => m_Wrapper.m_Player_ScrollJump;
+>>>>>>> Stashed changes
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -300,6 +359,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
                 @CycleWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCycleWeapon;
+<<<<<<< Updated upstream
+=======
+                @debugMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
+                @debugMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
+                @debugMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDebugMenu;
+                @ScrollJump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollJump;
+                @ScrollJump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollJump;
+                @ScrollJump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollJump;
+>>>>>>> Stashed changes
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -322,6 +390,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CycleWeapon.started += instance.OnCycleWeapon;
                 @CycleWeapon.performed += instance.OnCycleWeapon;
                 @CycleWeapon.canceled += instance.OnCycleWeapon;
+<<<<<<< Updated upstream
+=======
+                @debugMenu.started += instance.OnDebugMenu;
+                @debugMenu.performed += instance.OnDebugMenu;
+                @debugMenu.canceled += instance.OnDebugMenu;
+                @ScrollJump.started += instance.OnScrollJump;
+                @ScrollJump.performed += instance.OnScrollJump;
+                @ScrollJump.canceled += instance.OnScrollJump;
+>>>>>>> Stashed changes
             }
         }
     }
@@ -343,5 +420,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnCycleWeapon(InputAction.CallbackContext context);
+<<<<<<< Updated upstream
+=======
+        void OnDebugMenu(InputAction.CallbackContext context);
+        void OnScrollJump(InputAction.CallbackContext context);
+>>>>>>> Stashed changes
     }
 }
