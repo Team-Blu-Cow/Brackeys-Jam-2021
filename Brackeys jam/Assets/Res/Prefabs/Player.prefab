@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6636931492399837243}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6636931492399837239}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0dfb7ef85aad87d42ace83f139a6ae40, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -93,6 +93,9 @@ MonoBehaviour:
   base_Gravity: 20
   base_Friction: 6
   base_Vision: 50
+  base_Health: 20
+  base_HPRegen: 0.1
+  base_RegenSpeed: 2
   playerView: {fileID: 0}
   playerViewYOffset: 0.6
   xMouseSensitivity: 30
@@ -110,6 +113,8 @@ MonoBehaviour:
   jumpSpeed: 8
   holdJumpToBhop: 0
   numberOfAirJumps: 0
+  currentHealth: 0
+  maxHealth: 0
   fpsDisplayRate: 4
   _controller: {fileID: 6636931492399837236}
   _controls:
@@ -141,6 +146,7 @@ MonoBehaviour:
   _gun: {fileID: 0}
   m_debuglabels: {fileID: 0}
   _stats: {fileID: 6636931492399837243}
+  _enemiesRemaining: 0
 --- !u!114 &6636931492399837243
 MonoBehaviour:
   m_ObjectHideFlags: 0

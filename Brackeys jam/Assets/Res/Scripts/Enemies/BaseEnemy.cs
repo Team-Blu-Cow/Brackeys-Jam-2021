@@ -10,6 +10,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float _range;
     [SerializeField] protected float _aggroRange;
     [SerializeField] protected float _inaccuarcy;
+    [SerializeField] protected float _baseDamage = 1;
     protected float _shotCooldown;
     protected bool LOS;
 
@@ -62,6 +63,7 @@ public class BaseEnemy : MonoBehaviour
                     if (hit.transform.CompareTag("Player"))
                     {
                         Debug.Log("Player Hit");
+                        _player.GetComponent<PlayerController>().OnHit(_baseDamage);
                         rayL = Vector3.Distance(hit.point, transform.position);
                     }
                     else
@@ -69,13 +71,13 @@ public class BaseEnemy : MonoBehaviour
                         Debug.Log("Player Missed");
                     }
 
-                    Debug.DrawRay(transform.position, (transform.forward + new Vector3(xInac, yInac, zInac)) * rayL, Color.green, _range);
+                   // Debug.DrawRay(transform.position, (transform.forward + new Vector3(xInac, yInac, zInac)) * rayL, Color.green, _range);
                 }
             }
         }
     }
 
-    public void Hit()
+    public virtual void Hit()
     {
         _health--;
 

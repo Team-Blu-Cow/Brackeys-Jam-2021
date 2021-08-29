@@ -43,12 +43,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("base stats")]
     public float base_MoveSpeed = 7.0f;
-
     public int base_numberOfJumps = 0;
     public float base_JumpSpeed = 8f;
     public float base_Gravity = 20f;
     public float base_Friction = 6f;
     public float base_Vision = 50f;
+    public float base_Health = 10f;
+    public float base_HPRegen = 0.25f;
+    public float base_RegenSpeed = 1f;
 
     [Header("current values")]
     public Transform playerView;     // Camera
@@ -74,6 +76,13 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 8.0f;                // The speed at which the character's up axis gains when hitting jump
     public bool holdJumpToBhop = false;           // When enabled allows player to just hold jump button to keep on bhopping perfectly. Beware: smells like casual.
     public int numberOfAirJumps = 0;              // The number of times the player can air jump before touching the ground
+
+    // other stuff
+    public float currentHealth;
+    public float maxHealth;
+    private float hpRegen;
+    private float regenSpeed;
+    private float regenTimer;
 
     /*FPS Stuff */
     public float fpsDisplayRate = 4.0f; // 4 updates per sec
@@ -196,10 +205,24 @@ public class PlayerController : MonoBehaviour
 
         _shooting[_shootingIndex].enabled = true;
 
+        SetStats();
+
         numJumpsLeft = numberOfAirJumps;
 
         SetInputs();
         //EnableInput(false);
+    }
+
+    private void SetStats()
+    {
+        moveSpeed = base_MoveSpeed;
+        friction = base_Friction;
+        numberOfAirJumps = base_numberOfJumps;
+        jumpSpeed = base_JumpSpeed;
+        maxHealth = base_Health;
+        currentHealth = maxHealth;
+        hpRegen = base_HPRegen;
+        regenSpeed = base_RegenSpeed;
     }
 
     private void Update()
@@ -274,12 +297,22 @@ public class PlayerController : MonoBehaviour
             transform.position.y + playerViewYOffset,
             transform.position.z);
 
+        regenTimer += Time.deltaTime;
+
+        if (regenTimer >= regenSpeed)
+        {
+            regenTimer = 0;
+            currentHealth += hpRegen;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
+        }
+
         _controls.ResetInputs();
 
         if (_swapCooldown < 0.5)
             _swapCooldown += Time.deltaTime;
 
-        if(_controls._debugMenu._started)
+        if (_controls._debugMenu._started)
         {
             _controls._debugMenu._started = false;
             _stats.ShowUI();
@@ -308,7 +341,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnableInput(bool state)
     {
-        if(state)
+        if (state)
         {
             _input.Enable();
             Cursor.visible = false;
@@ -319,6 +352,16 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _input.Disable();
+    }
+
+    public void OnHit(float damage)
+    {
+        currentHealth -= damage;
+
+        if(currentHealth <= 0)
+        {
+            // TODO your dead
+        }
     }
 
     /*******************************************************************************************************\

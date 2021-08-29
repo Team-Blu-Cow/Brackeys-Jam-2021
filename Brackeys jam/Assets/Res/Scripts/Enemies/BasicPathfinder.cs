@@ -8,6 +8,7 @@ public class BasicPathfinder : BaseEnemy
     private NavMeshAgent _navMeshAgent;
 
     [SerializeField] private float _playerDistance;
+    [SerializeField] private Animator _animator;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -27,6 +28,11 @@ public class BasicPathfinder : BaseEnemy
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);
+
+        if (Vector3.Distance(_player.position, transform.position) < _range)
+            _animator.SetBool("attack", true);
+        else
+            _animator.SetBool("attack", false);
     }
 
     protected override void OnDrawGizmos()

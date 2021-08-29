@@ -29,8 +29,8 @@ public class UpdateUi : MonoBehaviour
         wave.text = "Wave: " + spawner.waveNo;
         enemiesRemaining.text = "Enemies Remaining: " + player._enemiesRemaining;
 
-        //healthBar.maxValue = player.maxHealth;
-        //healthBar.Value = player.Health;
+        healthBar.maxValue = player.maxHealth;
+        healthBar.value = player.currentHealth;
 
         if (gun.m_ammo == 0 && reloaded)
         {

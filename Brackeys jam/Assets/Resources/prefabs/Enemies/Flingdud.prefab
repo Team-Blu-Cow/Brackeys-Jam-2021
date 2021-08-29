@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6338923917438950987}
   - component: {fileID: 6338923917438950986}
   - component: {fileID: 6338923917438950985}
+  - component: {fileID: 3116381058539763872}
   m_Layer: 0
   m_Name: Flingdud
   m_TagString: Enemy
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -2755859358815806646, guid: 578bf2372b11f0047abc10b1eb29cc80, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,10 +104,12 @@ MonoBehaviour:
   _range: 25
   _aggroRange: 40
   _inaccuarcy: 0.12
+  _baseDamage: 1
   _player: {fileID: 0}
   showGizmo: 0
   _playerDistance: 5
-  _height: 5
+  _shootSpeed: 5
+  _bulletPrefab: {fileID: 4686984451310501671, guid: 9ae7997904b382a429f0a86171a3dfe6, type: 3}
 --- !u!54 &6338923917438950987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,7 +137,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.13833104, y: 0.12318821, z: 1}
+  m_Size: {x: 0.3, y: 0.3, z: 1}
   m_Center: {x: 0, y: 0.008689309, z: 0}
 --- !u!195 &6338923917438950985
 NavMeshAgent:
@@ -158,3 +161,22 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &3116381058539763872
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338923917438950984}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a69d1496b04f6844fa4bddaac0ba9eb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

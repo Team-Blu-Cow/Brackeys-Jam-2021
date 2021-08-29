@@ -12,10 +12,10 @@ public class DebugBullet : MonoBehaviour
 
     public void Setup()
     {
-        LineRenderer line = Instantiate(Resources.Load<GameObject>("Line"), transform).GetComponent<LineRenderer>();
+        //LineRenderer line = Instantiate(Resources.Load<GameObject>("Line"), transform).GetComponent<LineRenderer>();
 
-        line.positionCount = m_hitPos.Count;
-        line.SetPositions(m_hitPos.ToArray());
+        //line.positionCount = m_hitPos.Count;
+        //line.SetPositions(m_hitPos.ToArray());
 
         float sphereSize = 0.2f;
 
@@ -25,8 +25,8 @@ public class DebugBullet : MonoBehaviour
         // get the shorter distance and draw a sphere
         if (m_hit || m_shooting is ProjectileShooting)
         {
-            GameObject test = Instantiate(Resources.Load<GameObject>("Sphere"), m_hitPos[m_hitPos.Count - 1], Quaternion.identity, transform);
-            test.transform.localScale = Vector3.one * sphereSize;
+            //GameObject test = Instantiate(Resources.Load<GameObject>("Sphere"), m_hitPos[m_hitPos.Count - 1], Quaternion.identity, transform);
+            //test.transform.localScale = Vector3.one * sphereSize;
         }
     }
 }

@@ -8,6 +8,11 @@ public class FlyingEnemy : BaseEnemy
     private NavMeshAgent _navMeshAgent;
 
     [SerializeField] private float _playerDistance;
+    [SerializeField] private float _shootSpeed = 1f;
+    [SerializeField] private GameObject _bulletPrefab;
+
+
+    private float _shootTimer = 0;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -18,7 +23,7 @@ public class FlyingEnemy : BaseEnemy
 
     protected override void Update()
     {
-        base.Update();
+        //base.Update();
         Billboard();
 
         if (Vector3.Distance(_player.position, transform.position) > _playerDistance &&
@@ -28,6 +33,15 @@ public class FlyingEnemy : BaseEnemy
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);
+
+        _shootTimer += Time.deltaTime;
+
+        if(_shootTimer >= _shootSpeed)
+        {
+            _shootTimer = 0;
+            // shoot the player
+            Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     protected override void OnDrawGizmos()
