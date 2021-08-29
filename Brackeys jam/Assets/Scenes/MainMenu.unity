@@ -216,7 +216,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &159729225
 Mesh:
@@ -1923,54 +1923,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.5, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1926125585}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &471692391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
-  m_Name: Fog(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  fogDensity:
-    m_OverrideState: 1
-    m_Value: 0.3
-  fogDistance:
-    m_OverrideState: 1
-    m_Value: 50
-  fogColor:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  fogNear:
-    m_OverrideState: 1
-    m_Value: 1
-  fogFar:
-    m_OverrideState: 1
-    m_Value: 100
-  fogAltScale:
-    m_OverrideState: 0
-    m_Value: 10
-  fogThinning:
-    m_OverrideState: 1
-    m_Value: 100
-  noiseScale:
-    m_OverrideState: 0
-    m_Value: 100
-  noiseStrength:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!1 &588197876
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,9 +3315,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.5, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1154266971}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &660329064
 LightingSettings:
@@ -3478,7 +3436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &746412775
 Mesh:
@@ -3894,12 +3852,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154266969}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.463, y: 1.005, z: -1.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 588197881}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1304655988
 PrefabInstance:
@@ -4187,7 +4145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5563d4d6c1783584c9e43fd82a22aa81, type: 2}
+  - {fileID: 2100000, guid: a16312b8229e9f8419e28304d7e8eef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4532,7 +4490,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5563d4d6c1783584c9e43fd82a22aa81, type: 2}
+  - {fileID: 2100000, guid: a16312b8229e9f8419e28304d7e8eef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5622,7 +5580,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1789939592
 Mesh:
@@ -5849,7 +5807,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5563d4d6c1783584c9e43fd82a22aa81, type: 2}
+  - {fileID: 2100000, guid: a16312b8229e9f8419e28304d7e8eef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6570,12 +6528,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926125583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 1, z: -1.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 293106604}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2133866986
 GameObject:
@@ -6638,7 +6596,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5563d4d6c1783584c9e43fd82a22aa81, type: 2}
+  - {fileID: 2100000, guid: a16312b8229e9f8419e28304d7e8eef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
