@@ -23,8 +23,7 @@ public class BasicPathfinder : BaseEnemy
         YBillboard();
 
         if (Vector3.Distance(_player.position, transform.position) > _playerDistance &&
-        Vector3.Distance(_player.position, transform.position) < _aggroRange &&
-        LOS)
+        Vector3.Distance(_player.position, transform.position) < _aggroRange)
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);
@@ -32,8 +31,11 @@ public class BasicPathfinder : BaseEnemy
 
     protected override void OnDrawGizmos()
     {
-        base.OnDrawGizmos();
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _playerDistance);
+        if (showGizmo)
+        {
+            base.OnDrawGizmos();
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _playerDistance);
+        }
     }
 }

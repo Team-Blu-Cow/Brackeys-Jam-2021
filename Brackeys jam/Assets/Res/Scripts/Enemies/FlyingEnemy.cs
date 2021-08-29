@@ -8,7 +8,6 @@ public class FlyingEnemy : BaseEnemy
     private NavMeshAgent _navMeshAgent;
 
     [SerializeField] private float _playerDistance;
-    [SerializeField] private float _height;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -23,8 +22,9 @@ public class FlyingEnemy : BaseEnemy
         Billboard();
 
         if (Vector3.Distance(_player.position, transform.position) > _playerDistance &&
-        Vector3.Distance(_player.position, transform.position) < _aggroRange &&
-        LOS)
+
+        Vector3.Distance(_player.position, transform.position) < _aggroRange )
+
             _navMeshAgent.SetDestination(_player.position);
         else
             _navMeshAgent.SetDestination(transform.position);
@@ -32,8 +32,11 @@ public class FlyingEnemy : BaseEnemy
 
     protected override void OnDrawGizmos()
     {
-        base.OnDrawGizmos();
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _playerDistance);
+        if (showGizmo)
+        {
+            base.OnDrawGizmos();
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _playerDistance);
+        }
     }
 }

@@ -17,6 +17,14 @@ public class BaseEnemy : MonoBehaviour
 
     private Transform cam;
 
+    [SerializeField] protected bool showGizmo;
+
+    public int Health
+    {
+        get { return _health; }
+        set { _health = value; }
+    }
+
     protected virtual void Start()
     {
         cam = Camera.main.transform;
@@ -73,15 +81,20 @@ public class BaseEnemy : MonoBehaviour
 
         if (_health <= 0)
         {
+            if (_player.GetComponent<PlayerController>()._enemiesRemaining >= 0)
+                _player.GetComponent<PlayerController>()._enemiesRemaining--;
             Destroy(gameObject);
         }
     }
 
     protected virtual void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _aggroRange);
-        Gizmos.DrawWireSphere(transform.position, _range);
+        if (showGizmo)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _aggroRange);
+            Gizmos.DrawWireSphere(transform.position, _range);
+        }
     }
 
     protected void YBillboard()

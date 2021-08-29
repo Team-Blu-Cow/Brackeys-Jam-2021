@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, HideInInspector] private PlayerStats _stats;
 
+    public int _enemiesRemaining;
+
     private void OnValidate()
     {
         _input = new PlayerControls();
@@ -218,9 +220,6 @@ public class PlayerController : MonoBehaviour
             if (_controls._fireButton._performed) //#TODO #jack change this to be when not paused
                 _shooting[_shootingIndex].Shoot();
         }
-
-        if (_controls._reloadButton._started)
-            _shooting[_shootingIndex].Reload();
 
         /* Camera rotation stuff, mouse controls this shit */
         rotX -= _controls._aimVec.y * xMouseSensitivity * 0.02f;
