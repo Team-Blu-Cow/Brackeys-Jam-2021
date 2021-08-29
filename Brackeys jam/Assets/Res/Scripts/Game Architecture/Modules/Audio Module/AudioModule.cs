@@ -138,6 +138,10 @@ namespace blu
 
         private void CreateEvents()
         {
+            NewAudioEvent("event:/SFX/Player/Shoot/Shooting", 20);
+            NewAudioEvent("event:/SFX/Player/Walk/Walking", 20);
+            NewAudioEvent("event:/SFX/Player/Jump/Jumping");
+            NewAudioEvent("event:/SFX/Player/Land/Landing", 5);
             // put any new mono event in here
         }
     }
