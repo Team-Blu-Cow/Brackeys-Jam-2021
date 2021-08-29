@@ -361,6 +361,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &363745187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
+  m_Name: Fog(Clone)
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  fogDensity:
+    m_OverrideState: 1
+    m_Value: 0.3
+  fogDistance:
+    m_OverrideState: 1
+    m_Value: 50
+  fogColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  fogNear:
+    m_OverrideState: 1
+    m_Value: 1
+  fogFar:
+    m_OverrideState: 1
+    m_Value: 100
+  fogAltScale:
+    m_OverrideState: 0
+    m_Value: 10
+  fogThinning:
+    m_OverrideState: 1
+    m_Value: 100
+  noiseScale:
+    m_OverrideState: 0
+    m_Value: 100
+  noiseStrength:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &525424942 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3689469244585693382, guid: 160b66206b512c14080441c750b8d7bd, type: 3}
@@ -395,10 +439,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 887532934}
     - target: {fileID: 6636931492399837237, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
-      propertyPath: _shooting.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6636931492399837237, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
       propertyPath: _shooting.Array.data[0]
       value: 
       objectReference: {fileID: 525424942}
@@ -409,10 +449,6 @@ PrefabInstance:
     - target: {fileID: 6636931492399837239, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6636931492399837239, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6636931492399837241, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
       propertyPath: m_RootOrder
@@ -463,17 +499,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1802424478}
     - target: {fileID: 6636931492399837243, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
-      propertyPath: fogShader
-      value: 
-      objectReference: {fileID: 1739567210}
-    - target: {fileID: 6636931492399837243, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
       propertyPath: modifiers
       value: 
       objectReference: {fileID: 887532934}
-    - target: {fileID: 6636931492399837243, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
-      propertyPath: upgradeUIPrefab
-      value: 
-      objectReference: {fileID: 7940700234283682438, guid: f0890193b88e5104c9b4f74d5618e018, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b6351f22ba05574993dcb82252073ae, type: 3}
 --- !u!114 &1405471302 stripped
@@ -800,50 +828,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1739567210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
-  m_Name: Fog(Clone)
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  fogDensity:
-    m_OverrideState: 1
-    m_Value: 0.3
-  fogDistance:
-    m_OverrideState: 1
-    m_Value: 50
-  fogColor:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  fogNear:
-    m_OverrideState: 1
-    m_Value: 1
-  fogFar:
-    m_OverrideState: 1
-    m_Value: 100
-  fogAltScale:
-    m_OverrideState: 0
-    m_Value: 10
-  fogThinning:
-    m_OverrideState: 1
-    m_Value: 100
-  noiseScale:
-    m_OverrideState: 0
-    m_Value: 100
-  noiseStrength:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!1001 &1796006173
 PrefabInstance:
   m_ObjectHideFlags: 0

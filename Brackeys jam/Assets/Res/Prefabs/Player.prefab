@@ -110,73 +110,6 @@ MonoBehaviour:
   jumpSpeed: 8
   holdJumpToBhop: 0
   numberOfAirJumps: 0
-  style:
-    m_Name: 
-    m_Normal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Hover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Active:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Focused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnNormal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnHover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnActive:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnFocused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Margin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Overflow:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Font: {fileID: 0}
-    m_FontSize: 0
-    m_FontStyle: 0
-    m_Alignment: 0
-    m_WordWrap: 0
-    m_RichText: 1
-    m_TextClipping: 0
-    m_ImagePosition: 0
-    m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 0
-    m_FixedHeight: 0
-    m_StretchWidth: 1
-    m_StretchHeight: 0
   fpsDisplayRate: 4
   _controller: {fileID: 6636931492399837236}
   _controls:
@@ -190,8 +123,24 @@ MonoBehaviour:
       _canceled: 0
       _started: 0
       _gameObject: {fileID: 0}
+    _reloadButton:
+      _performed: 0
+      _canceled: 0
+      _started: 0
+      _gameObject: {fileID: 0}
+    _debugMenu:
+      _performed: 0
+      _canceled: 0
+      _started: 0
+      _gameObject: {fileID: 0}
     _moveVec: {x: 0, y: 0}
     _aimVec: {x: 0, y: 0}
+  _shooting:
+  - {fileID: 0}
+  - {fileID: 0}
+  _gun: {fileID: 0}
+  m_debuglabels: {fileID: 0}
+  _stats: {fileID: 6636931492399837243}
 --- !u!114 &6636931492399837243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,9 +159,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbe70966da3bfe549a80d861c890bf98, type: 2}
   - {fileID: 11400000, guid: a291835c337a8334aa338e9cc89d76f9, type: 2}
   - {fileID: 11400000, guid: f6ed3ac586bf04348b6533adf994f99d, type: 2}
+  - {fileID: 11400000, guid: c648214e4b3659c4a8b670189578f2cd, type: 2}
   - {fileID: 11400000, guid: 68b25caaa0a71f340ab67e4ae22848db, type: 2}
   playerController: {fileID: 6636931492399837237}
+  modifiers: {fileID: 0}
   cameraVolume: {fileID: 0}
   fogShader: {fileID: 0}
+  upgradeUIPrefab: {fileID: 7940700234283682438, guid: f0890193b88e5104c9b4f74d5618e018, type: 3}
+  uicam: {fileID: 0}
   upgradeData:
     data: []
